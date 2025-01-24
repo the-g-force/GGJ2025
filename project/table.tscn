@@ -1,0 +1,48 @@
+[gd_scene load_steps=6 format=3 uid="uid://0r4f1cldyrke"]
+
+[ext_resource type="Script" path="res://table.gd" id="1_7y6cb"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_vhudw"]
+size = Vector3(10, 1, 20)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_gxfi8"]
+data = PackedVector3Array(-5, 0.5, 10, 5, 0.5, 10, -5, -0.5, 10, 5, 0.5, 10, 5, -0.5, 10, -5, -0.5, 10, 5, 0.5, -10, -5, 0.5, -10, 5, -0.5, -10, -5, 0.5, -10, -5, -0.5, -10, 5, -0.5, -10, 5, 0.5, 10, 5, 0.5, -10, 5, -0.5, 10, 5, 0.5, -10, 5, -0.5, -10, 5, -0.5, 10, -5, 0.5, -10, -5, 0.5, 10, -5, -0.5, -10, -5, 0.5, 10, -5, -0.5, 10, -5, -0.5, -10, 5, 0.5, 10, -5, 0.5, 10, 5, 0.5, -10, -5, 0.5, 10, -5, 0.5, -10, 5, 0.5, -10, -5, -0.5, 10, 5, -0.5, 10, -5, -0.5, -10, 5, -0.5, 10, 5, -0.5, -10, -5, -0.5, -10)
+
+[sub_resource type="BoxMesh" id="BoxMesh_pwclo"]
+size = Vector3(2, 0.4, 0.4)
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ghrun"]
+points = PackedVector3Array(1, 0.2, 0.2, 1, 0.2, -0.2, -1, 0.2, 0.2, 1, -0.2, 0.2, 1, -0.2, -0.2, -1, 0.2, -0.2, -1, -0.2, 0.2, -1, -0.2, -0.2)
+
+[node name="Table" type="StaticBody3D"]
+script = ExtResource("1_7y6cb")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_vhudw")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("ConcavePolygonShape3D_gxfi8")
+metadata/_edit_lock_ = true
+
+[node name="LeftHinge" type="HingeJoint3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, -1, 0, 1, -4.37114e-08, -2.89494, 0.0862803, 6.54128)
+node_a = NodePath("..")
+node_b = NodePath("../LeftFlipper")
+angular_limit/enable = true
+angular_limit/upper = 0.785398
+angular_limit/lower = 0.0
+motor/enable = true
+motor/target_velocity = 3.49066
+
+[node name="LeftFlipper" type="RigidBody3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16631, 0.7, 6.53286)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="LeftFlipper"]
+mesh = SubResource("BoxMesh_pwclo")
+metadata/_edit_lock_ = true
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="LeftFlipper"]
+shape = SubResource("ConvexPolygonShape3D_ghrun")
+metadata/_edit_lock_ = true
