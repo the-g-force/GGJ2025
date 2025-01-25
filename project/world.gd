@@ -6,6 +6,9 @@ extends Node3D
 @onready var left_launcher := $LeftLauncher
 @onready var right_launcher := $RightLauncher
 
+var _left_score := 0
+var _right_score := 0
+
 
 func _process(_delta: float) -> void:
 	%LeftShotsRemaining.text = "Bubbles: %d" % %LeftLauncher.shots_remaining
@@ -44,20 +47,18 @@ func _on_waiting_for_end_state_physics_processing(_delta: float) -> void:
 
 
 func _on_done_state_entered() -> void:
-	# a negative score means player id 0 got points
-	# a positive score means player id 1 got points
-	var score := 0
 	for bubble : RigidBody3D in get_tree().get_nodes_in_group("bubble"):
+		var points_for_bubble := 0
 		var distance_from_center := Vector2(bubble.global_position.x, bubble.global_position.z).length()
 		if distance_from_center <= inner_scoring_ring_radius:
-			score += 15 * (-1 if bubble.id == 0 else 1)
+			points_for_bubble = 15
 		elif distance_from_center <= outer_scoring_ring_radius:
-			score += 10 * (-1 if bubble.id == 0 else 1)
+			points_for_bubble = 10
 		else:
-			score += 5 * (-1 if bubble.id == 0 else 1)
-	if score == 0:
-		print("it's a tie!")
-	elif score > 0:
-		print("red player got %d points!" % [score])
-	else:
-		print("blue player got %d points!" % [abs(score)])
+			points_for_bubble = 5
+		if bubble.id == 0:
+			_left_score += points_for_bubble
+		else:
+			_right_score += points_for_bubble
+	%LeftScore.text = "Score: %d" % _left_score
+	%RightScore.text = "Score: %d" % _right_score
