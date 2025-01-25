@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ufd5eevjf1il"]
+[gd_scene load_steps=15 format=3 uid="uid://ufd5eevjf1il"]
 
 [ext_resource type="PackedScene" uid="uid://big8tl0nt1wgj" path="res://launcher/launcher.tscn" id="1_8fowb"]
 [ext_resource type="Script" path="res://world.gd" id="1_hffby"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="5_cwv3t"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="6_d2iue"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_mv47d"]
+[ext_resource type="Theme" uid="uid://cby03jpamd07p" path="res://common/theme.tres" id="8_8wvt2"]
 [ext_resource type="PackedScene" uid="uid://68dxwb7tib05" path="res://goblin/goblin.tscn" id="8_qfd2a"]
 [ext_resource type="PackedScene" uid="uid://bqw81ep4b10p" path="res://title/logo.glb" id="9_pg36h"]
 
@@ -94,40 +95,51 @@ script = ExtResource("6_d2iue")
 unique_name_in_owner = true
 visible = false
 
-[node name="LeftBox" type="VBoxContainer" parent="HUD"]
+[node name="Control" type="Control" parent="HUD"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("8_8wvt2")
+
+[node name="LeftBox" type="VBoxContainer" parent="HUD/Control"]
+layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
 offset_top = -50.0
-offset_right = 40.0
+offset_right = 61.0
 grow_vertical = 0
 
-[node name="LeftScore" type="Label" parent="HUD/LeftBox"]
+[node name="LeftScore" type="Label" parent="HUD/Control/LeftBox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Score: 0"
 
-[node name="LeftShotsRemaining" type="Label" parent="HUD/LeftBox"]
+[node name="LeftShotsRemaining" type="Label" parent="HUD/Control/LeftBox"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="RightBox" type="VBoxContainer" parent="HUD"]
+[node name="RightBox" type="VBoxContainer" parent="HUD/Control"]
+layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
 anchor_right = 1.0
 anchor_bottom = 1.0
-offset_left = -40.0
+offset_left = -61.0
 offset_top = -50.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="RightScore" type="Label" parent="HUD/RightBox"]
+[node name="RightScore" type="Label" parent="HUD/Control/RightBox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Score: 0"
 
-[node name="RightShotsRemaining" type="Label" parent="HUD/RightBox"]
+[node name="RightShotsRemaining" type="Label" parent="HUD/Control/RightBox"]
 unique_name_in_owner = true
 layout_mode = 2
 
@@ -141,30 +153,42 @@ transform = Transform3D(-4, 0, -3.49691e-07, 9.71504e-08, 3.84254, -1.11127, 3.3
 [node name="TitleCanvasLayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
 
-[node name="PlayButton" type="Button" parent="TitleCanvasLayer"]
+[node name="Control" type="Control" parent="TitleCanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = ExtResource("8_8wvt2")
+
+[node name="PlayButton" type="Button" parent="TitleCanvasLayer/Control"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -4.0
-offset_top = -4.0
-offset_right = 4.0
-offset_bottom = 4.0
+offset_left = -50.5
+offset_top = -15.5
+offset_right = 50.5
+offset_bottom = 15.5
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_font_sizes/font_size = 36
 text = "Begin Game"
 
-[node name="Label" type="Label" parent="TitleCanvasLayer"]
+[node name="Label" type="Label" parent="TitleCanvasLayer/Control"]
+layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -98.5
-offset_top = 40.0
+offset_top = 32.0
 offset_right = 98.5
-offset_bottom = 63.0
+offset_bottom = 55.0
 grow_horizontal = 2
 grow_vertical = 2
 text = "A Global Game Jam Game"
@@ -173,4 +197,4 @@ text = "A Global Game Jam Game"
 [connection signal="state_exited" from="StateChart/Main/Title" to="." method="_on_title_state_exited"]
 [connection signal="state_entered" from="StateChart/Main/Normal" to="." method="_on_normal_state_entered"]
 [connection signal="state_entered" from="StateChart/Main/Done" to="." method="_on_done_state_entered"]
-[connection signal="pressed" from="TitleCanvasLayer/PlayButton" to="." method="_on_play_button_pressed"]
+[connection signal="pressed" from="TitleCanvasLayer/Control/PlayButton" to="." method="_on_play_button_pressed"]
