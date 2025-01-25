@@ -86,6 +86,29 @@ delay_in_seconds = "0.0"
 [node name="Done" type="Node" parent="StateChart/Main"]
 script = ExtResource("6_d2iue")
 
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="LeftShotsRemaining" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -23.0
+offset_right = 40.0
+grow_vertical = 0
+
+[node name="RightShotsRemaining" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -40.0
+offset_top = -23.0
+grow_horizontal = 0
+grow_vertical = 0
+
 [connection signal="body_exited" from="BoardZone" to="." method="_on_board_zone_body_exited"]
 [connection signal="state_entered" from="StateChart/Main/Normal" to="." method="_on_normal_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/Main/WaitingForEnd" to="." method="_on_waiting_for_end_state_physics_processing"]

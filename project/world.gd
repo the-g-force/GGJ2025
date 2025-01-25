@@ -7,6 +7,11 @@ extends Node3D
 @onready var right_launcher := $RightLauncher
 
 
+func _process(_delta: float) -> void:
+	%LeftShotsRemaining.text = "Bubbles: %d" % %LeftLauncher.shots_remaining
+	%RightShotsRemaining.text = "Bubbles: %d" % %RightLauncher.shots_remaining
+
+
 func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("fire_left"):
 		%LeftLauncher.action_pressed()
