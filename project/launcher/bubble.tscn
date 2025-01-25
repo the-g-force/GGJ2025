@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b2pj4dd1ctr83"]
+[gd_scene load_steps=12 format=3 uid="uid://b2pj4dd1ctr83"]
 
 [ext_resource type="Script" path="res://launcher/bubble.gd" id="1_ax73q"]
 [ext_resource type="PackedScene" uid="uid://d32ugf1lnfpfw" path="res://goblin/goblin.glb" id="2_0hxqs"]
@@ -10,7 +10,7 @@ friction = 0.2
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jl7uu"]
 render_priority = 0
 shader = ExtResource("2_35nyv")
-shader_parameter/y_threshold = 0.5
+shader_parameter/y_threshold = 1.0
 shader_parameter/color = Vector4(0, 0, 1, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_2idx5"]
@@ -22,6 +22,68 @@ height = 0.25
 [sub_resource type="SphereMesh" id="SphereMesh_b0ftp"]
 radius = 0.05
 height = 0.1
+
+[sub_resource type="Animation" id="Animation_feied"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Goblin:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Goblin:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_dx3n6"]
+resource_name = "goblintime"
+length = 3.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Goblin:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.3, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.987155, 2.31136, -0.739874), Vector3(0, 6.28319, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Goblin:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.833333, 1.76667, 2.6),
+"transitions": PackedFloat32Array(2.07053, 2.54912, 0.554785, 1.7411),
+"update": 0,
+"values": [Vector3(-0.111387, 0, -0.0197207), Vector3(-0.0875103, 0, 0.0614345), Vector3(0.0829755, 0, 0), Vector3(0.0283984, -2.38419e-07, -0.0904994)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_venp8"]
+_data = {
+"RESET": SubResource("Animation_feied"),
+"goblintime": SubResource("Animation_dx3n6")
+}
 
 [node name="Bubble" type="RigidBody3D" groups=["bubble"]]
 axis_lock_angular_x = true
@@ -54,3 +116,9 @@ direction = Vector3(0, 1, 0)
 gravity = Vector3(0, -5, 0)
 initial_velocity_min = 2.0
 initial_velocity_max = 2.0
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_venp8")
+}
+autoplay = "goblintime"
