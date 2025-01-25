@@ -1,4 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://b2pj4dd1ctr83"]
+[gd_scene load_steps=6 format=3 uid="uid://b2pj4dd1ctr83"]
+
+[ext_resource type="Script" path="res://launcher/bubble.gd" id="1_ax73q"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_57hc0"]
 
@@ -16,6 +18,7 @@ height = 0.25
 
 [node name="Bubble" type="RigidBody3D" groups=["bubble"]]
 physics_material_override = SubResource("PhysicsMaterial_57hc0")
+script = ExtResource("1_ax73q")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("SphereMesh_2idx5")

@@ -1,8 +1,11 @@
 extends Node3D
 
+@export var inner_scoring_ring_radius := 3.0
+@export var outer_scoring_ring_radius := 6.0
+
 @onready var left_launcher := $LeftLauncher
 @onready var right_launcher := $RightLauncher
-	
+
 
 func _physics_process(_delta: float) -> void:
 	if Input.is_action_just_pressed("fire_left"):
@@ -36,4 +39,20 @@ func _on_waiting_for_end_state_physics_processing(_delta: float) -> void:
 
 
 func _on_done_state_entered() -> void:
-	print("DONE")
+	# a negative score means player id 0 got points
+	# a positive score means player id 1 got points
+	var score := 0
+	for bubble : RigidBody3D in get_tree().get_nodes_in_group("bubble"):
+		var distance_from_center := Vector2(bubble.global_position.x, bubble.global_position.z).length()
+		if distance_from_center <= inner_scoring_ring_radius:
+			score += 15 * (-1 if bubble.id == 0 else 1)
+		elif distance_from_center <= outer_scoring_ring_radius:
+			score += 10 * (-1 if bubble.id == 0 else 1)
+		else:
+			score += 5 * (-1 if bubble.id == 0 else 1)
+	if score == 0:
+		print("it's a tie!")
+	elif score > 0:
+		print("player 1 got %d points!" % [score])
+	else:
+		print("player 0 got %d points!" % [abs(score)])
