@@ -1,4 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://cej3f6jpl1tuu"]
+[gd_scene load_steps=5 format=3 uid="uid://cej3f6jpl1tuu"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_f3imv"]
+albedo_color = Color(0.501961, 0.8, 0, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jieyr"]
+albedo_color = Color(1, 0.415686, 1, 1)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_1gq2i"]
+albedo_color = Color(0.52549, 0.356863, 0.721569, 1)
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_nwlbb"]
 height = 0.5
@@ -10,6 +19,31 @@ radius = 10.0
 radius = 10.0
 height = 0.5
 sides = 64
+material = SubResource("StandardMaterial3D_f3imv")
+
+[node name="MidHole" type="CSGCylinder3D" parent="Table"]
+operation = 2
+radius = 6.0
+height = 0.5
+sides = 64
+
+[node name="MidRing" type="CSGCylinder3D" parent="Table"]
+radius = 6.0
+height = 0.5
+sides = 64
+material = SubResource("StandardMaterial3D_jieyr")
+
+[node name="CenterHole" type="CSGCylinder3D" parent="Table/MidRing"]
+operation = 2
+radius = 3.0
+height = 0.5
+sides = 64
+
+[node name="CenterRing" type="CSGCylinder3D" parent="Table/MidRing"]
+radius = 3.0
+height = 0.5
+sides = 64
+material = SubResource("StandardMaterial3D_1gq2i")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CylinderShape3D_nwlbb")
