@@ -22,7 +22,6 @@ signal shot
 
 func _ready() -> void:
 	_wand.color = PlayerColors.BLUE if id == 0 else PlayerColors.RED
-	print("Set color to %s" + str(_wand.color))
 
 
 func start_turn() -> void:
