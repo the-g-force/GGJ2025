@@ -80,7 +80,17 @@ script = ExtResource("4_rpfoh")
 [node name="ToSelectingPosition" type="Node" parent="StateChart/Root/Shooting"]
 script = ExtResource("6_rl65k")
 to = NodePath("../../SelectingPosition")
-delay_in_seconds = "1"
+event = &"shoot_again"
+delay_in_seconds = "0.0"
+
+[node name="ToDone" type="Node" parent="StateChart/Root/Shooting"]
+script = ExtResource("6_rl65k")
+to = NodePath("../../Done")
+event = &"done"
+delay_in_seconds = "0.0"
+
+[node name="Done" type="Node" parent="StateChart/Root"]
+script = ExtResource("4_rpfoh")
 
 [node name="RotationIndicator" type="Node3D" parent="."]
 visible = false
