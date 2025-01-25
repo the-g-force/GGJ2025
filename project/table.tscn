@@ -1,11 +1,8 @@
-[gd_scene load_steps=2 format=3 uid="uid://0r4f1cldyrke"]
-
-[ext_resource type="Script" path="res://table.gd" id="1_7y6cb"]
+[gd_scene format=3 uid="uid://0r4f1cldyrke"]
 
 [node name="Table" type="CSGBox3D"]
 use_collision = true
 size = Vector3(20, 1, 20)
-script = ExtResource("1_7y6cb")
 
 [node name="CSGCylinder3D" type="CSGCylinder3D" parent="."]
 operation = 2
