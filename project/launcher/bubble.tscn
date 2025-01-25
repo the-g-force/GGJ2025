@@ -10,8 +10,6 @@ roughness = 0.3
 
 [sub_resource type="SphereMesh" id="SphereMesh_2idx5"]
 material = SubResource("StandardMaterial3D_lwq5l")
-height = 0.5
-is_hemisphere = true
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_pnret"]
 height = 0.25
