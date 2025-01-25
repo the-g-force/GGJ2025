@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://ufd5eevjf1il"]
+[gd_scene load_steps=8 format=3 uid="uid://ufd5eevjf1il"]
 
 [ext_resource type="PackedScene" uid="uid://big8tl0nt1wgj" path="res://launcher/launcher.tscn" id="1_8fowb"]
 [ext_resource type="Script" path="res://world.gd" id="1_hffby"]
@@ -16,6 +16,10 @@ background_mode = 2
 sky = SubResource("Sky_fefn7")
 tonemap_mode = 2
 glow_enabled = true
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_7nbn7"]
+height = 4.0
+radius = 9.0
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_hffby")
@@ -38,3 +42,11 @@ unique_name_in_owner = true
 [node name="RightLauncher" parent="." instance=ExtResource("1_8fowb")]
 unique_name_in_owner = true
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 0, 0)
+
+[node name="BoardZone" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="BoardZone"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
+shape = SubResource("CylinderShape3D_7nbn7")
+
+[connection signal="body_exited" from="BoardZone" to="." method="_on_board_zone_body_exited"]
