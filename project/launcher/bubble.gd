@@ -7,12 +7,27 @@ var _material : ShaderMaterial
 var id := -1 :
 	set(value):
 		id = value
-		var new_material := ShaderMaterial.new()
-		new_material.shader = preload("res://launcher/bubble.gdshader")
-		new_material.set_shader_parameter("color", COLORS[id])
-		$MeshInstance3D.material_override = new_material
-		_material = new_material
+		_update_bubble_material()
+		_update_particle_mesh()
 var goblins := 0
+
+
+func _update_bubble_material() -> void:
+	var new_material := ShaderMaterial.new()
+	new_material.shader = preload("res://launcher/bubble.gdshader")
+	new_material.set_shader_parameter("color", COLORS[id])
+	$MeshInstance3D.material_override = new_material
+	_material = new_material
+
+
+func _update_particle_mesh() -> void:
+	var new_material := StandardMaterial3D.new()
+	new_material.albedo_color = COLORS[id]
+	var mesh := SphereMesh.new()
+	mesh.radius = 0.05
+	mesh.height = 0.1
+	mesh.material = new_material
+	$CPUParticles3D.mesh = mesh
 
 
 func absorb_goblin() -> void:
