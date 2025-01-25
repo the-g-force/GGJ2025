@@ -1,27 +1,27 @@
-[gd_scene load_steps=8 format=3 uid="uid://b2pj4dd1ctr83"]
+[gd_scene load_steps=9 format=3 uid="uid://b2pj4dd1ctr83"]
 
 [ext_resource type="Script" path="res://launcher/bubble.gd" id="1_ax73q"]
+[ext_resource type="PackedScene" uid="uid://d32ugf1lnfpfw" path="res://goblin/goblin.glb" id="2_0hxqs"]
+[ext_resource type="Shader" path="res://launcher/bubble.gdshader" id="2_35nyv"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_57hc0"]
 friction = 0.2
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwq5l"]
-transparency = 1
-albedo_color = Color(0, 0, 1, 0.588235)
-roughness = 0.3
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jl7uu"]
+render_priority = 0
+shader = ExtResource("2_35nyv")
+shader_parameter/y_threshold = 0.5
+shader_parameter/color = Vector4(0, 0, 1, 1)
 
 [sub_resource type="SphereMesh" id="SphereMesh_2idx5"]
-material = SubResource("StandardMaterial3D_lwq5l")
+material = SubResource("ShaderMaterial_jl7uu")
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_pnret"]
 height = 0.25
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_b4tqn"]
-albedo_color = Color(0, 1, 0, 1)
-
-[sub_resource type="BoxMesh" id="BoxMesh_8wbk6"]
-material = SubResource("StandardMaterial3D_b4tqn")
-size = Vector3(0.3, 0.3, 0.3)
+[sub_resource type="SphereMesh" id="SphereMesh_b0ftp"]
+radius = 0.05
+height = 0.1
 
 [node name="Bubble" type="RigidBody3D" groups=["bubble"]]
 axis_lock_angular_x = true
@@ -37,7 +37,20 @@ mesh = SubResource("SphereMesh_2idx5")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.125, 0)
 shape = SubResource("CylinderShape3D_pnret")
 
-[node name="Goblin" type="MeshInstance3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+[node name="Goblin" parent="." instance=ExtResource("2_0hxqs")]
+transform = Transform3D(0.75, 0, 0, 0, 0.75, 0, 0, 0, 0.75, 0, 0, 0)
 visible = false
-mesh = SubResource("BoxMesh_8wbk6")
+
+[node name="CPUParticles3D" type="CPUParticles3D" parent="."]
+emitting = false
+amount = 25
+one_shot = true
+preprocess = 0.3
+explosiveness = 0.8
+randomness = 0.5
+lifetime_randomness = 0.3
+mesh = SubResource("SphereMesh_b0ftp")
+direction = Vector3(0, 1, 0)
+gravity = Vector3(0, -5, 0)
+initial_velocity_min = 2.0
+initial_velocity_max = 2.0

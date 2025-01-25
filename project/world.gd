@@ -33,7 +33,7 @@ func _process(_delta: float) -> void:
 
 func _on_board_zone_body_exited(body: Node3D) -> void:
 	if body is RigidBody3D:
-		body.queue_free()
+		body.pop()
 
 
 func _on_normal_state_entered() -> void:
