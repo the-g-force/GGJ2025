@@ -10,8 +10,14 @@ extends Node2D
 ## The current value of this timer
 var value := minimum
 
-func _ready() -> void:
-	var half_period := period / 2.0
-	while true:
-		await create_tween().tween_property(self, "value", maximum, half_period).finished
-		await create_tween().tween_property(self, "value", minimum, half_period).finished
+var _increasing := true
+
+func _physics_process(delta: float) -> void:
+	if _increasing:
+		value = min(maximum, value + period/2.0 * delta)
+		if value >= maximum:
+			_increasing = false
+	else:
+		value = max(minimum, value - period/2.0 * delta)
+		if value <= minimum:
+			_increasing = true

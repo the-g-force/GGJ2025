@@ -45,19 +45,11 @@ near = 0.001
 
 [node name="LeftLauncher" parent="." instance=ExtResource("1_8fowb")]
 unique_name_in_owner = true
-transform = Transform3D(0.999962, 0, 0.00872654, 0, 1, 0, -0.00872654, 0, 0.999962, -10, 1.37792, 0)
-shots_remaining = 6
-base_power = 20.0
-speed = 1.5
-power_ratio = 0.5
+transform = Transform3D(0.999962, 0, 0.00872654, 0, 1, 0, -0.00872654, 0, 0.999962, -10, 0.608312, 0)
 
 [node name="RightLauncher" parent="." instance=ExtResource("1_8fowb")]
 unique_name_in_owner = true
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 1.37792, 0)
-shots_remaining = 6
-base_power = 20.0
-speed = 1.5
-power_ratio = 0.5
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 0.608312, 0)
 
 [node name="BoardZone" type="Area3D" parent="."]
 

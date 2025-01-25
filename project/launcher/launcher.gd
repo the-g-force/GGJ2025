@@ -15,11 +15,16 @@ signal out_of_shots
 @export var power_ratio := 0.5:
 	set(value):
 		power_ratio = value
-		%PowerIndicator.scale.z = remap(power_ratio, 0, 1, 0.5, 1)
+		%PowerIndicator.scale.y = remap(power_ratio, 0, 1, 0.5, 1)
 
 
 func action_pressed() -> void:
 	$StateChart.send_event('action_pressed')
+
+
+func _on_selecting_position_state_entered() -> void:
+	# Seed the timer to be wherever the wand currently is
+	_timer.value = _path_follow.progress_ratio
 
 
 func _on_selecting_position_state_physics_processing(_delta: float) -> void:
@@ -36,6 +41,8 @@ func _on_selecting_power_state_physics_processing(_delta: float) -> void:
 
 func _on_shooting_state_entered() -> void:
 	_launch()
+	_wand.rotation = Vector3.ZERO
+	
 	if shots_remaining == 0:
 		out_of_shots.emit()
 		$StateChart.send_event("done")
