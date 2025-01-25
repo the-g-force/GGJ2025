@@ -1,5 +1,7 @@
 extends Node3D
 
+signal _settled
+
 @export var inner_scoring_ring_radius := 3.0
 @export var outer_scoring_ring_radius := 6.0
 
@@ -13,13 +15,13 @@ var _right_score := 0
 func _process(_delta: float) -> void:
 	%LeftShotsRemaining.text = "Bubbles: %d" % %LeftLauncher.shots_remaining
 	%RightShotsRemaining.text = "Bubbles: %d" % %RightLauncher.shots_remaining
-
-
-func _physics_process(_delta: float) -> void:
-	if Input.is_action_just_pressed("fire_left"):
-		%LeftLauncher.action_pressed()
-	if Input.is_action_just_pressed("fire_right"):
-		%RightLauncher.action_pressed()
+	
+	# If all the bubbles are asleep, we are done.
+	var bubbles := get_tree().get_nodes_in_group("bubble")
+	for bubble in bubbles:
+		if not bubble.sleeping:
+			return
+	_settled.emit()
 
 
 func _on_board_zone_body_exited(body: Node3D) -> void:
@@ -28,22 +30,18 @@ func _on_board_zone_body_exited(body: Node3D) -> void:
 
 
 func _on_normal_state_entered() -> void:
-	for launcher in [left_launcher,right_launcher]:
-		launcher.out_of_shots.connect(_on_launcher_out_of_shots)
+	while %LeftLauncher.shots_remaining > 0:
+		for launcher in [left_launcher, right_launcher]:
+			launcher.start_turn()
+			await launcher.shot
+			await _settled
+	
+	$StateChart.send_event("done")
 
 
 func _on_launcher_out_of_shots() -> void:
 	if left_launcher.shots_remaining == 0 and right_launcher.shots_remaining == 0:
 		$StateChart.send_event("wait_for_end")
-
-
-func _on_waiting_for_end_state_physics_processing(_delta: float) -> void:
-	# If all the bubbles are asleep, we are done.
-	var bubbles := get_tree().get_nodes_in_group("bubble")
-	for bubble in bubbles:
-		if not bubble.sleeping:
-			return
-	$StateChart.send_event("done")
 
 
 func _on_done_state_entered() -> void:

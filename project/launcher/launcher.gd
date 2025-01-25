@@ -1,12 +1,13 @@
 extends Node3D
 
-signal out_of_shots
+signal shot
 
 @export var shots_remaining := 6
 @export var projectile_scene : PackedScene
 @export var base_power := 20.0
 @export var speed := 1.50
 @export var id := 0
+@export var input_action : String
 
 @onready var _path_follow = $Path3D/PathFollow3D
 @onready var _timer := $PingPongTimer
@@ -19,8 +20,8 @@ signal out_of_shots
 		%PowerIndicator.scale.y = remap(power_ratio, 0, 1, 0.5, 1)
 
 
-func action_pressed() -> void:
-	$StateChart.send_event('action_pressed')
+func start_turn() -> void:
+	$StateChart.send_event("start_turn")
 
 
 func _on_selecting_position_state_entered() -> void:
@@ -30,25 +31,23 @@ func _on_selecting_position_state_entered() -> void:
 
 func _on_selecting_position_state_physics_processing(_delta: float) -> void:
 	_path_follow.progress_ratio = _timer.value
+	_check_for_input()
 
 
 func _on_selecting_rotation_state_physics_processing(_delta: float) -> void:
 	_wand.rotation.y = remap(_timer.value, 0, 1, -TAU/8,TAU/8)
+	_check_for_input()
 
 
 func _on_selecting_power_state_physics_processing(_delta: float) -> void:
 	power_ratio = _timer.value
+	_check_for_input()
 
 
 func _on_shooting_state_entered() -> void:
 	_launch()
 	_wand.rotation = Vector3.ZERO
-	
-	if shots_remaining == 0:
-		out_of_shots.emit()
-		$StateChart.send_event("done")
-	else:
-		$StateChart.send_event("shoot_again")
+	$StateChart.send_event("shot")
 
 
 func _launch() -> void:
@@ -63,7 +62,8 @@ func _launch() -> void:
 	ball.id = id
 	
 	shots_remaining -= 1
-
+	shot.emit()
+	
 
 func _on_selecting_power_state_entered() -> void:
 	%PowerIndicator.visible = true
@@ -71,3 +71,8 @@ func _on_selecting_power_state_entered() -> void:
 
 func _on_selecting_power_state_exited() -> void:
 	%PowerIndicator.visible = false
+
+
+func _check_for_input() -> void:
+	if Input.is_action_just_pressed(input_action):
+		$StateChart.send_event('action_pressed')

@@ -29,7 +29,7 @@ transform = Transform3D(0.999962, 0, -0.00872654, 0, 1, 0, 0.00872654, 0, 0.9999
 curve = SubResource("Curve3D_7tji3")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
-transform = Transform3D(-0.999943, 0, -0.00917805, 0, 1, 0, 0.00917805, 0, -0.999943, -0.570361, 0, -0.0127877)
+transform = Transform3D(-0.999942, 0, -0.00917804, 0, 1, 0, 0.00917804, 0, -0.999942, -0.570361, 0, -0.0127877)
 progress = 4.76237
 loop = false
 
@@ -47,7 +47,16 @@ script = ExtResource("3_tv4qt")
 
 [node name="Root" type="Node" parent="StateChart"]
 script = ExtResource("4_fb2ym")
-initial_state = NodePath("SelectingPosition")
+initial_state = NodePath("NotMyTurn")
+
+[node name="NotMyTurn" type="Node" parent="StateChart/Root"]
+script = ExtResource("4_rpfoh")
+
+[node name="ToSelectingPosition" type="Node" parent="StateChart/Root/NotMyTurn"]
+script = ExtResource("6_rl65k")
+to = NodePath("../../SelectingPosition")
+event = &"start_turn"
+delay_in_seconds = "0.0"
 
 [node name="SelectingPosition" type="Node" parent="StateChart/Root"]
 script = ExtResource("4_rpfoh")
@@ -79,20 +88,11 @@ delay_in_seconds = "0.0"
 [node name="Shooting" type="Node" parent="StateChart/Root"]
 script = ExtResource("4_rpfoh")
 
-[node name="ToSelectingPosition" type="Node" parent="StateChart/Root/Shooting"]
+[node name="ToNotMyTurn" type="Node" parent="StateChart/Root/Shooting"]
 script = ExtResource("6_rl65k")
-to = NodePath("../../SelectingPosition")
-event = &"shoot_again"
+to = NodePath("../../NotMyTurn")
+event = &"shot"
 delay_in_seconds = "0.0"
-
-[node name="ToDone" type="Node" parent="StateChart/Root/Shooting"]
-script = ExtResource("6_rl65k")
-to = NodePath("../../Done")
-event = &"done"
-delay_in_seconds = "0.0"
-
-[node name="Done" type="Node" parent="StateChart/Root"]
-script = ExtResource("4_rpfoh")
 
 [node name="PingPongTimer" parent="." instance=ExtResource("7_jdk1g")]
 

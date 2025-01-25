@@ -47,11 +47,13 @@ near = 0.001
 [node name="LeftLauncher" parent="." instance=ExtResource("1_8fowb")]
 unique_name_in_owner = true
 transform = Transform3D(0.999962, 0, 0.00872654, 0, 1, 0, -0.00872654, 0, 0.999962, -10, 0.608312, 0)
+input_action = "fire_left"
 
 [node name="RightLauncher" parent="." instance=ExtResource("1_8fowb")]
 unique_name_in_owner = true
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 0.608312, 0)
 id = 1
+input_action = "fire_right"
 
 [node name="BoardZone" type="Area3D" parent="."]
 
@@ -69,16 +71,7 @@ initial_state = NodePath("Normal")
 [node name="Normal" type="Node" parent="StateChart/Main"]
 script = ExtResource("6_d2iue")
 
-[node name="ToWaitingForEnd" type="Node" parent="StateChart/Main/Normal"]
-script = ExtResource("7_mv47d")
-to = NodePath("../../WaitingForEnd")
-event = &"wait_for_end"
-delay_in_seconds = "0.0"
-
-[node name="WaitingForEnd" type="Node" parent="StateChart/Main"]
-script = ExtResource("6_d2iue")
-
-[node name="ToDone" type="Node" parent="StateChart/Main/WaitingForEnd"]
+[node name="ToDone" type="Node" parent="StateChart/Main/Normal"]
 script = ExtResource("7_mv47d")
 to = NodePath("../../Done")
 event = &"done"
@@ -131,5 +124,4 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.19425, 0.25, -1.93494)
 
 [connection signal="body_exited" from="BoardZone" to="." method="_on_board_zone_body_exited"]
 [connection signal="state_entered" from="StateChart/Main/Normal" to="." method="_on_normal_state_entered"]
-[connection signal="state_physics_processing" from="StateChart/Main/WaitingForEnd" to="." method="_on_waiting_for_end_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Main/Done" to="." method="_on_done_state_entered"]
