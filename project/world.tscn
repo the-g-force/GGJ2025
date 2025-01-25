@@ -1,8 +1,12 @@
-[gd_scene load_steps=8 format=3 uid="uid://ufd5eevjf1il"]
+[gd_scene load_steps=12 format=3 uid="uid://ufd5eevjf1il"]
 
 [ext_resource type="PackedScene" uid="uid://big8tl0nt1wgj" path="res://launcher/launcher.tscn" id="1_8fowb"]
 [ext_resource type="Script" path="res://world.gd" id="1_hffby"]
 [ext_resource type="PackedScene" uid="uid://cej3f6jpl1tuu" path="res://table/table.tscn" id="2_k4tch"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="4_qfl2r"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="5_cwv3t"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="6_d2iue"]
+[ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_mv47d"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_74gm6"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -49,4 +53,35 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 0,
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
 shape = SubResource("CylinderShape3D_7nbn7")
 
+[node name="StateChart" type="Node" parent="."]
+script = ExtResource("4_qfl2r")
+
+[node name="Main" type="Node" parent="StateChart"]
+script = ExtResource("5_cwv3t")
+initial_state = NodePath("Normal")
+
+[node name="Normal" type="Node" parent="StateChart/Main"]
+script = ExtResource("6_d2iue")
+
+[node name="ToWaitingForEnd" type="Node" parent="StateChart/Main/Normal"]
+script = ExtResource("7_mv47d")
+to = NodePath("../../WaitingForEnd")
+event = &"wait_for_end"
+delay_in_seconds = "0.0"
+
+[node name="WaitingForEnd" type="Node" parent="StateChart/Main"]
+script = ExtResource("6_d2iue")
+
+[node name="ToDone" type="Node" parent="StateChart/Main/WaitingForEnd"]
+script = ExtResource("7_mv47d")
+to = NodePath("../../Done")
+event = &"done"
+delay_in_seconds = "0.0"
+
+[node name="Done" type="Node" parent="StateChart/Main"]
+script = ExtResource("6_d2iue")
+
 [connection signal="body_exited" from="BoardZone" to="." method="_on_board_zone_body_exited"]
+[connection signal="state_entered" from="StateChart/Main/Normal" to="." method="_on_normal_state_entered"]
+[connection signal="state_physics_processing" from="StateChart/Main/WaitingForEnd" to="." method="_on_waiting_for_end_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Main/Done" to="." method="_on_done_state_entered"]

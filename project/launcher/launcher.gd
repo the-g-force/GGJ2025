@@ -1,5 +1,7 @@
 extends Node3D
 
+signal out_of_shots
+
 @export var shots_remaining := 6
 @export var projectile_scene : PackedScene
 @export var base_power := 20.0
@@ -42,6 +44,7 @@ func _on_shooting_state_entered() -> void:
 	_rotation_indicator.visible = false
 	_launch()
 	if shots_remaining == 0:
+		out_of_shots.emit()
 		$StateChart.send_event("done")
 	else:
 		$StateChart.send_event("shoot_again")
