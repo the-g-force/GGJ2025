@@ -20,6 +20,11 @@ signal shot
 		%PowerIndicator.scale.y = remap(power_ratio, 0, 1, 0.5, 1)
 
 
+func _ready() -> void:
+	_wand.color = PlayerColors.BLUE if id == 0 else PlayerColors.RED
+	print("Set color to %s" + str(_wand.color))
+
+
 func start_turn() -> void:
 	$StateChart.send_event("start_turn")
 

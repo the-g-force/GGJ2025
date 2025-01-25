@@ -1,7 +1,7 @@
 extends RigidBody3D
 
 const GOBLIN_INTERACTION_FRICTION := 0.3
-const COLORS := [Color.BLUE, Color.RED]
+const COLORS := [PlayerColors.BLUE, PlayerColors.RED]
 
 var _material : ShaderMaterial
 var id := -1 :
