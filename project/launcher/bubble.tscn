@@ -17,6 +17,8 @@ is_hemisphere = true
 height = 0.25
 
 [node name="Bubble" type="RigidBody3D" groups=["bubble"]]
+axis_lock_angular_x = true
+axis_lock_angular_z = true
 physics_material_override = SubResource("PhysicsMaterial_57hc0")
 script = ExtResource("1_ax73q")
 
