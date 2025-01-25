@@ -3,6 +3,7 @@ extends Node3D
 signal _settled
 
 @export var shots_per_round := 1
+@export var points_to_win := 0
 @export var inner_scoring_ring_radius := 3.0
 @export var outer_scoring_ring_radius := 6.0
 
@@ -50,7 +51,9 @@ func _on_normal_state_entered() -> void:
 			await launcher.shot
 			await _settled
 	
-	var is_game_over := _left_score >= 100 or _right_score >= 100
+	_score_round()
+	var is_game_over := _left_score != _right_score \
+		and (_left_score >= points_to_win or _right_score >= points_to_win)
 	if is_game_over:
 		$StateChart.send_event("game_ended")
 	else:
@@ -64,6 +67,10 @@ func _on_launcher_out_of_shots() -> void:
 
 func _on_done_state_entered() -> void:
 	_switch_to_angled_camera()
+	%EndOfGameView.visible = true
+	var blue_wins := _left_score > _right_score
+	%BlueModel.visible = blue_wins
+	%RedModel.visible = not blue_wins
 
 
 func _on_title_state_exited() -> void:
@@ -93,7 +100,6 @@ func _on_end_of_round_state_entered() -> void:
 	_switch_to_angled_camera()
 	%EndOfRoundView.visible = true
 	%EndOfRoundCanvas.visible = true
-	_score_round()
 
 
 func _score_round() -> void:
