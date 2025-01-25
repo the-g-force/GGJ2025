@@ -1,9 +1,6 @@
 extends Node3D
 
-enum Facing {LEFT,RIGHT}
-
 @export var shots_remaining := 6
-@export var facing := Facing.RIGHT
 @export var projectile_scene : PackedScene
 @export var base_power := 20.0
 @export var speed := 1.50
