@@ -57,8 +57,8 @@ func _on_done_state_entered() -> void:
 		else:
 			points_for_bubble = 5
 		if bubble.id == 0:
-			_left_score += points_for_bubble
+			_left_score += points_for_bubble * (1 + bubble.goblins)
 		else:
-			_right_score += points_for_bubble
+			_right_score += points_for_bubble * (1 + bubble.goblins)
 	%LeftScore.text = "Score: %d" % _left_score
 	%RightScore.text = "Score: %d" % _right_score

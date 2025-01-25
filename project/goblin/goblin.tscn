@@ -1,0 +1,26 @@
+[gd_scene load_steps=5 format=3 uid="uid://68dxwb7tib05"]
+
+[ext_resource type="Script" path="res://goblin/goblin.gd" id="1_o1otg"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_pki5q"]
+size = Vector3(0.3, 0.3, 0.3)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_4hl3j"]
+albedo_color = Color(0, 1, 0, 1)
+
+[sub_resource type="BoxMesh" id="BoxMesh_x8r2e"]
+material = SubResource("StandardMaterial3D_4hl3j")
+size = Vector3(0.3, 0.3, 0.3)
+
+[node name="Goblin" type="Area3D"]
+script = ExtResource("1_o1otg")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+shape = SubResource("BoxShape3D_pki5q")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
+mesh = SubResource("BoxMesh_x8r2e")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://ufd5eevjf1il"]
+[gd_scene load_steps=13 format=3 uid="uid://ufd5eevjf1il"]
 
 [ext_resource type="PackedScene" uid="uid://big8tl0nt1wgj" path="res://launcher/launcher.tscn" id="1_8fowb"]
 [ext_resource type="Script" path="res://world.gd" id="1_hffby"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="5_cwv3t"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="6_d2iue"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_mv47d"]
+[ext_resource type="PackedScene" uid="uid://68dxwb7tib05" path="res://goblin/goblin.tscn" id="8_qfd2a"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_74gm6"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -124,6 +125,9 @@ text = "Score: 0"
 [node name="RightShotsRemaining" type="Label" parent="CanvasLayer/RightBox"]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="Goblin" parent="." instance=ExtResource("8_qfd2a")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.19425, 0.25, -1.93494)
 
 [connection signal="body_exited" from="BoardZone" to="." method="_on_board_zone_body_exited"]
 [connection signal="state_entered" from="StateChart/Main/Normal" to="." method="_on_normal_state_entered"]
