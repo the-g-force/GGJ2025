@@ -116,6 +116,12 @@ delay_in_seconds = "0.0"
 [node name="Done" type="Node" parent="StateChart/Main"]
 script = ExtResource("6_d2iue")
 
+[node name="ToTitle" type="Node" parent="StateChart/Main/Done"]
+script = ExtResource("7_mv47d")
+to = NodePath("../../Title")
+event = &"reset"
+delay_in_seconds = "0.0"
+
 [node name="EndOfRoundView" type="Node3D" parent="."]
 unique_name_in_owner = true
 visible = false
@@ -213,6 +219,7 @@ layout_mode = 2
 [node name="Logo" parent="." instance=ExtResource("9_pg36h")]
 unique_name_in_owner = true
 transform = Transform3D(-4, 0, -3.49691e-07, 9.71504e-08, 3.84254, -1.11127, 3.35925e-07, -1.11127, -3.84254, 0, 4.30496, -1.71285)
+visible = false
 
 [node name="TitleCanvasLayer" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
@@ -258,10 +265,12 @@ grow_vertical = 2
 text = "A Global Game Jam Game"
 
 [connection signal="body_exited" from="BoardZone" to="." method="_on_board_zone_body_exited"]
+[connection signal="state_entered" from="StateChart/Main/Title" to="." method="_on_title_state_entered"]
 [connection signal="state_exited" from="StateChart/Main/Title" to="." method="_on_title_state_exited"]
 [connection signal="state_entered" from="StateChart/Main/Normal" to="." method="_on_normal_state_entered"]
 [connection signal="state_entered" from="StateChart/Main/EndOfRound" to="." method="_on_end_of_round_state_entered"]
 [connection signal="state_exited" from="StateChart/Main/EndOfRound" to="." method="_on_end_of_round_state_exited"]
 [connection signal="state_input" from="StateChart/Main/EndOfRound" to="." method="_on_end_of_round_state_input"]
 [connection signal="state_entered" from="StateChart/Main/Done" to="." method="_on_done_state_entered"]
+[connection signal="state_exited" from="StateChart/Main/Done" to="." method="_on_done_state_exited"]
 [connection signal="pressed" from="TitleCanvasLayer/Control/PlayButton" to="." method="_on_play_button_pressed"]

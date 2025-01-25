@@ -2,8 +2,8 @@ extends Node3D
 
 signal _settled
 
-@export var shots_per_round := 1
-@export var points_to_win := 0
+@export var shots_per_round := 6
+@export var points_to_win := 100
 @export var inner_scoring_ring_radius := 3.0
 @export var outer_scoring_ring_radius := 6.0
 
@@ -65,12 +65,9 @@ func _on_launcher_out_of_shots() -> void:
 		$StateChart.send_event("wait_for_end")
 
 
-func _on_done_state_entered() -> void:
-	_switch_to_angled_camera()
-	%EndOfGameView.visible = true
-	var blue_wins := _left_score > _right_score
-	%BlueModel.visible = blue_wins
-	%RedModel.visible = not blue_wins
+func _on_title_state_entered() -> void:
+	%Logo.visible = true
+	%TitleCanvasLayer.visible = true
 
 
 func _on_title_state_exited() -> void:
@@ -133,3 +130,18 @@ func _on_end_of_round_state_exited() -> void:
 func _on_end_of_round_state_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed:
 		$StateChart.send_event("start_next_round")
+
+
+func _on_done_state_entered() -> void:
+	_switch_to_angled_camera()
+	%EndOfGameView.visible = true
+	var blue_wins := _left_score > _right_score
+	%BlueModel.visible = blue_wins
+	%RedModel.visible = not blue_wins
+	
+	await get_tree().create_timer(5.0).timeout
+	$StateChart.send_event("reset")
+
+
+func _on_done_state_exited() -> void:
+	%EndOfGameView.visible = false
