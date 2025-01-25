@@ -6,6 +6,7 @@ signal out_of_shots
 @export var projectile_scene : PackedScene
 @export var base_power := 20.0
 @export var speed := 1.50
+@export var id := 0
 
 @onready var _path_follow = $Path3D/PathFollow3D
 @onready var _timer := $PingPongTimer
@@ -59,6 +60,7 @@ func _launch() -> void:
 	ball.global_position = _path_follow.global_position
 	
 	ball.apply_impulse(direction * power)
+	ball.id = id
 	
 	shots_remaining -= 1
 

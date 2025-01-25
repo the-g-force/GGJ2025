@@ -50,6 +50,7 @@ transform = Transform3D(0.999962, 0, 0.00872654, 0, 1, 0, -0.00872654, 0, 0.9999
 [node name="RightLauncher" parent="." instance=ExtResource("1_8fowb")]
 unique_name_in_owner = true
 transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 0.608312, 0)
+id = 1
 
 [node name="BoardZone" type="Area3D" parent="."]
 

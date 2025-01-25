@@ -53,6 +53,6 @@ func _on_done_state_entered() -> void:
 	if score == 0:
 		print("it's a tie!")
 	elif score > 0:
-		print("player 1 got %d points!" % [score])
+		print("red player got %d points!" % [score])
 	else:
-		print("player 0 got %d points!" % [abs(score)])
+		print("blue player got %d points!" % [abs(score)])
