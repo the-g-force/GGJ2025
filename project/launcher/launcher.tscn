@@ -1,8 +1,9 @@
-[gd_scene load_steps=11 format=3 uid="uid://big8tl0nt1wgj"]
+[gd_scene load_steps=12 format=3 uid="uid://big8tl0nt1wgj"]
 
 [ext_resource type="Script" path="res://launcher/launcher.gd" id="1_hwwg4"]
 [ext_resource type="PackedScene" uid="uid://b2pj4dd1ctr83" path="res://launcher/bubble.tscn" id="2_8j4tv"]
 [ext_resource type="PackedScene" uid="uid://db3xnichfbq82" path="res://launcher/wand.tscn" id="3_4i0kp"]
+[ext_resource type="PackedScene" uid="uid://cexcewfjiu8n0" path="res://launcher/wand_model.tscn" id="3_n1wjv"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="3_tv4qt"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="4_fb2ym"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_rpfoh"]
@@ -34,7 +35,7 @@ transform = Transform3D(-0.999658, 0, -0.0251371, 0, 1, 0, 0.0251371, 0, -0.9996
 progress = 4.76237
 loop = false
 
-[node name="Wand" parent="Path3D/PathFollow3D" instance=ExtResource("3_4i0kp")]
+[node name="Wand" parent="Path3D/PathFollow3D" instance=ExtResource("3_n1wjv")]
 unique_name_in_owner = true
 
 [node name="PowerIndicator" type="MeshInstance3D" parent="Path3D/PathFollow3D/Wand"]
@@ -42,6 +43,11 @@ unique_name_in_owner = true
 transform = Transform3D(8.41822e-05, -0.999958, -0.00917708, 0.999958, -4.37114e-08, 0.00917747, -0.00917708, -0.00917747, 0.999916, -1.18693, 0, -0.0108934)
 visible = false
 mesh = SubResource("CylinderMesh_aul32")
+skeleton = NodePath("../../OldWand")
+
+[node name="OldWand" parent="Path3D/PathFollow3D" instance=ExtResource("3_4i0kp")]
+unique_name_in_owner = true
+visible = false
 
 [node name="StateChart" type="Node" parent="."]
 script = ExtResource("3_tv4qt")
