@@ -114,6 +114,10 @@ func _score_round() -> void:
 				_left_score += points_for_bubble * (1 + bubble.goblins)
 			else:
 				_right_score += points_for_bubble * (1 + bubble.goblins)
+	_update_score_labels()
+
+
+func _update_score_labels() -> void:
 	%LeftScore.text = "Score: %d" % _left_score
 	%RightScore.text = "Score: %d" % _right_score
 
@@ -122,6 +126,10 @@ func _on_end_of_round_state_exited() -> void:
 	_switch_to_play_camera()
 	%EndOfRoundView.visible = false
 	%EndOfRoundCanvas.visible = false
+	_reset_board()
+
+
+func _reset_board() -> void:
 	var bubbles := get_tree().get_nodes_in_group("bubble")
 	for bubble in bubbles:
 		bubble.pop()
@@ -145,3 +153,7 @@ func _on_done_state_entered() -> void:
 
 func _on_done_state_exited() -> void:
 	%EndOfGameView.visible = false
+	_left_score = 0
+	_right_score = 0
+	_update_score_labels()
+	_reset_board()
