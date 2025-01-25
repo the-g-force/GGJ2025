@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://launcher/bubble.gd" id="1_ax73q"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_57hc0"]
+friction = 0.2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_lwq5l"]
 transparency = 1
@@ -26,6 +27,7 @@ size = Vector3(0.3, 0.3, 0.3)
 axis_lock_angular_x = true
 axis_lock_angular_z = true
 physics_material_override = SubResource("PhysicsMaterial_57hc0")
+gravity_scale = 5.0
 script = ExtResource("1_ax73q")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
