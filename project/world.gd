@@ -11,6 +11,13 @@ signal _settled
 var _left_score := 0
 var _right_score := 0
 
+var _camera : Camera3D
+
+func _ready() -> void:
+	_camera = $AngledCamera.duplicate()
+	add_child(_camera)
+	_camera.make_current()
+
 
 func _process(_delta: float) -> void:
 	%LeftShotsRemaining.text = "Bubbles: %d" % %LeftLauncher.shots_remaining
@@ -30,6 +37,7 @@ func _on_board_zone_body_exited(body: Node3D) -> void:
 
 
 func _on_normal_state_entered() -> void:
+	_switch_to_play_camera()
 	%HUD.visible = true
 	
 	while %LeftLauncher.shots_remaining > 0:
@@ -47,6 +55,7 @@ func _on_launcher_out_of_shots() -> void:
 
 
 func _on_done_state_entered() -> void:
+	_switch_to_angled_camera()
 	for bubble : RigidBody3D in get_tree().get_nodes_in_group("bubble"):
 		var points_for_bubble := 0
 		var distance_from_center := Vector2(bubble.global_position.x, bubble.global_position.z).length()
@@ -71,3 +80,17 @@ func _on_title_state_exited() -> void:
 
 func _on_play_button_pressed() -> void:
 	$StateChart.send_event("start")
+
+
+func _switch_to_play_camera() -> void:
+	_animate_change_to($PlayCamera)
+
+
+func _switch_to_angled_camera() -> void:
+	_animate_change_to($AngledCamera)
+
+
+func _animate_change_to(target : Camera3D) -> void:
+	var tween := create_tween()
+	tween.tween_property(_camera, "global_transform", target.global_transform, 1.0)
+	tween.parallel().tween_property(_camera, "size", target.size, 1.0)

@@ -38,10 +38,16 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_52yug")
 
-[node name="Camera3D" type="Camera3D" parent="."]
+[node name="AngledCamera" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.87021, 0.492682, 0, -0.492682, 0.87021, 0, 5.20042, 8.177)
 projection = 1
 size = 15.286
+near = 0.001
+
+[node name="PlayCamera" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.0084298, 0.999965, 0, -0.999965, 0.0084298, 0, 11.5338, 0)
+projection = 1
+size = 20.048
 near = 0.001
 
 [node name="Table" parent="." instance=ExtResource("2_k4tch")]
