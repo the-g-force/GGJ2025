@@ -1,4 +1,4 @@
-[gd_scene load_steps=6 format=3 uid="uid://0r4f1cldyrke"]
+[gd_scene load_steps=7 format=3 uid="uid://0r4f1cldyrke"]
 
 [ext_resource type="Script" path="res://table.gd" id="1_7y6cb"]
 
@@ -10,6 +10,9 @@ data = PackedVector3Array(-5, 0.5, 10, 5, 0.5, 10, -5, -0.5, 10, 5, 0.5, 10, 5, 
 
 [sub_resource type="BoxMesh" id="BoxMesh_pwclo"]
 size = Vector3(2, 0.4, 0.4)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_loiwc"]
+albedo_color = Color(0.443137, 1, 1, 1)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_ghrun"]
 points = PackedVector3Array(1, 0.2, 0.2, 1, 0.2, -0.2, -1, 0.2, 0.2, 1, -0.2, 0.2, 1, -0.2, -0.2, -1, 0.2, -0.2, -1, -0.2, 0.2, -1, -0.2, -0.2)
@@ -33,14 +36,15 @@ node_b = NodePath("../LeftFlipper")
 angular_limit/enable = true
 angular_limit/upper = 0.785398
 angular_limit/lower = 0.0
-motor/enable = true
-motor/target_velocity = 3.49066
+motor/target_velocity = 5.23599
 
 [node name="LeftFlipper" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.16631, 0.7, 6.53286)
+can_sleep = false
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="LeftFlipper"]
 mesh = SubResource("BoxMesh_pwclo")
+surface_material_override/0 = SubResource("StandardMaterial3D_loiwc")
 metadata/_edit_lock_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="LeftFlipper"]
