@@ -68,7 +68,7 @@ _data = {
 "hopplejump": SubResource("Animation_1hiru")
 }
 
-[node name="Goblin" type="Area3D"]
+[node name="Goblin" type="Area3D" groups=["goblin"]]
 script = ExtResource("1_o1otg")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

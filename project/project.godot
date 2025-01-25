@@ -28,6 +28,7 @@ enabled=PackedStringArray("res://addons/anthonyec.camera_preview/plugin.cfg", "r
 [global_group]
 
 bubble=""
+goblin=""
 
 [input]
 

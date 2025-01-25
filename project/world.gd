@@ -133,6 +133,11 @@ func _reset_board() -> void:
 	var bubbles := get_tree().get_nodes_in_group("bubble")
 	for bubble in bubbles:
 		bubble.pop()
+	# I think that waiting until all the bubbles are cleared looks better.
+	await get_tree().get_first_node_in_group("bubble").tree_exited
+	for goblin in get_tree().get_nodes_in_group("goblin"):
+		goblin.queue_free()
+	$Table.spawn_goblins()
 
 
 func _on_end_of_round_state_input(event: InputEvent) -> void:

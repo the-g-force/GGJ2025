@@ -14,7 +14,7 @@ func _start_turn_delay_timer() -> void:
 
 
 func _on_body_entered(body: Node3D) -> void:
-	if body is RigidBody3D:
+	if body is RigidBody3D and not body.popping:
 		body.absorb_goblin()
 		queue_free()
 
