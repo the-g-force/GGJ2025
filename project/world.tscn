@@ -36,16 +36,28 @@ shadow_enabled = true
 environment = SubResource("Environment_52yug")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.176157, 0.984362, 0, -0.984362, 0.176157, 0, 13.4996, 2.66343)
+transform = Transform3D(1, 0, 0, 0, 0.87021, 0.492682, 0, -0.492682, 0.87021, 0, 5.20042, 7.177)
+projection = 1
+size = 15.286
+near = 0.001
 
 [node name="Table" parent="." instance=ExtResource("2_k4tch")]
 
 [node name="LeftLauncher" parent="." instance=ExtResource("1_8fowb")]
 unique_name_in_owner = true
+transform = Transform3D(0.999962, 0, 0.00872654, 0, 1, 0, -0.00872654, 0, 0.999962, -10, 1.37792, 0)
+shots_remaining = 6
+base_power = 20.0
+speed = 1.5
+power_ratio = 0.5
 
 [node name="RightLauncher" parent="." instance=ExtResource("1_8fowb")]
 unique_name_in_owner = true
-transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 0, 0)
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 1.37792, 0)
+shots_remaining = 6
+base_power = 20.0
+speed = 1.5
+power_ratio = 0.5
 
 [node name="BoardZone" type="Area3D" parent="."]
 

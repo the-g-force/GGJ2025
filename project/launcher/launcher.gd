@@ -8,15 +8,14 @@ signal out_of_shots
 @export var speed := 1.50
 
 @onready var _path_follow = $Path3D/PathFollow3D
-@onready var _rotation_indicator := $RotationIndicator
 @onready var _timer := $PingPongTimer
+@onready var _wand := %Wand
 
 ## Public and exported so it can be animated
 @export var power_ratio := 0.5:
 	set(value):
 		power_ratio = value
-		var color := Color(value,value,value)
-		$RotationIndicator/MeshInstance3D.get_active_material(0).albedo_color = color
+		%PowerIndicator.scale.z = remap(power_ratio, 0, 1, 0.5, 1)
 
 
 func action_pressed() -> void:
@@ -27,13 +26,8 @@ func _on_selecting_position_state_physics_processing(_delta: float) -> void:
 	_path_follow.progress_ratio = _timer.value
 
 
-func _on_selecting_rotation_state_entered() -> void:
-	_rotation_indicator.global_position = _path_follow.global_position
-	_rotation_indicator.visible = true
-
-
 func _on_selecting_rotation_state_physics_processing(_delta: float) -> void:
-	_rotation_indicator.rotation.y = remap(_timer.value, 0, 1, -TAU/8,TAU/8)
+	_wand.rotation.y = remap(_timer.value, 0, 1, -TAU/8,TAU/8)
 
 
 func _on_selecting_power_state_physics_processing(_delta: float) -> void:
@@ -41,7 +35,6 @@ func _on_selecting_power_state_physics_processing(_delta: float) -> void:
 
 
 func _on_shooting_state_entered() -> void:
-	_rotation_indicator.visible = false
 	_launch()
 	if shots_remaining == 0:
 		out_of_shots.emit()
@@ -51,7 +44,7 @@ func _on_shooting_state_entered() -> void:
 
 
 func _launch() -> void:
-	var direction := Vector3.RIGHT.rotated(Vector3.UP, _rotation_indicator.rotation.y + rotation.y)
+	var direction : Vector3 = Vector3.LEFT.rotated(Vector3.UP, _wand.global_rotation.y)
 	var power := base_power * remap(power_ratio, 0, 1, 0.5, 1.5)
 	
 	var ball : RigidBody3D = projectile_scene.instantiate()
@@ -61,3 +54,11 @@ func _launch() -> void:
 	ball.apply_impulse(direction * power)
 	
 	shots_remaining -= 1
+
+
+func _on_selecting_power_state_entered() -> void:
+	%PowerIndicator.visible = true
+
+
+func _on_selecting_power_state_exited() -> void:
+	%PowerIndicator.visible = false

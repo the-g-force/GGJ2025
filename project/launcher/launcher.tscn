@@ -1,7 +1,8 @@
-[gd_scene load_steps=12 format=3 uid="uid://big8tl0nt1wgj"]
+[gd_scene load_steps=11 format=3 uid="uid://big8tl0nt1wgj"]
 
 [ext_resource type="Script" path="res://launcher/launcher.gd" id="1_hwwg4"]
 [ext_resource type="PackedScene" uid="uid://b2pj4dd1ctr83" path="res://launcher/bubble.tscn" id="2_8j4tv"]
+[ext_resource type="PackedScene" uid="uid://db3xnichfbq82" path="res://launcher/wand.tscn" id="3_4i0kp"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/state_chart.gd" id="3_tv4qt"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/compound_state.gd" id="4_fb2ym"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="4_rpfoh"]
@@ -10,18 +11,13 @@
 
 [sub_resource type="Curve3D" id="Curve3D_7tji3"]
 _data = {
-"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.85, 0, -4.5, 0, 0, 0, 0, 0, 0, 0.8, 0, 4.5),
-"tilts": PackedFloat32Array(0, 0)
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, 0.85, 0, -4.5, -0.0261211, 0, -2.24641, 0.0261211, 0, 2.24641, -0.570234, 0, -6.14091e-08, 0, 0, 0, 0, 0, 0, 0.8, 0, 4.5),
+"tilts": PackedFloat32Array(0, 0, 0)
 }
-point_count = 2
+point_count = 3
 
-[sub_resource type="SphereMesh" id="SphereMesh_y7bry"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_s20p8"]
-
-[sub_resource type="CylinderMesh" id="CylinderMesh_jnltw"]
-material = SubResource("StandardMaterial3D_s20p8")
-height = 4.0
+[sub_resource type="CylinderMesh" id="CylinderMesh_aul32"]
+bottom_radius = 0.0
 
 [node name="Launcher" type="Node3D"]
 transform = Transform3D(0.999962, 0, 0.00872654, 0, 1, 0, -0.00872654, 0, 0.999962, -10, 0, 0)
@@ -29,16 +25,22 @@ script = ExtResource("1_hwwg4")
 projectile_scene = ExtResource("2_8j4tv")
 
 [node name="Path3D" type="Path3D" parent="."]
-transform = Transform3D(0.999962, 0, -0.00872654, 0, 1, 0, 0.00872654, 0, 0.999962, -0.0871477, 0, -0.000760525)
+transform = Transform3D(0.999962, 0, -0.00872654, 0, 1, 0, 0.00872654, 0, 0.999962, 0.08, 0, -0.001)
 curve = SubResource("Curve3D_7tji3")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="Path3D"]
-transform = Transform3D(-0.999985, 0, 0.00555552, 0, 1, 0, -0.00555552, 0, -0.999985, 0.825, 0, 4.76831e-07)
-progress = 4.50007
+transform = Transform3D(-0.999943, 0, -0.00917805, 0, 1, 0, 0.00917805, 0, -0.999943, -0.570361, 0, -0.0127877)
+progress = 4.76237
 loop = false
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Path3D/PathFollow3D"]
-mesh = SubResource("SphereMesh_y7bry")
+[node name="Wand" parent="Path3D/PathFollow3D" instance=ExtResource("3_4i0kp")]
+unique_name_in_owner = true
+
+[node name="PowerIndicator" type="MeshInstance3D" parent="Path3D/PathFollow3D/Wand"]
+unique_name_in_owner = true
+transform = Transform3D(8.41822e-05, -0.999958, -0.00917708, 0.999958, -4.37114e-08, 0.00917747, -0.00917708, -0.00917747, 0.999916, -1.18693, 0, -0.0108934)
+visible = false
+mesh = SubResource("CylinderMesh_aul32")
 
 [node name="StateChart" type="Node" parent="."]
 script = ExtResource("3_tv4qt")
@@ -92,18 +94,11 @@ delay_in_seconds = "0.0"
 [node name="Done" type="Node" parent="StateChart/Root"]
 script = ExtResource("4_rpfoh")
 
-[node name="RotationIndicator" type="Node3D" parent="."]
-visible = false
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="RotationIndicator"]
-transform = Transform3D(-4.37114e-08, -1, 0, 1, -4.37114e-08, 0, 0, 0, 1, 2, 0, 0)
-mesh = SubResource("CylinderMesh_jnltw")
-skeleton = NodePath("../..")
-
 [node name="PingPongTimer" parent="." instance=ExtResource("7_jdk1g")]
 
 [connection signal="state_physics_processing" from="StateChart/Root/SelectingPosition" to="." method="_on_selecting_position_state_physics_processing"]
-[connection signal="state_entered" from="StateChart/Root/SelectingRotation" to="." method="_on_selecting_rotation_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/Root/SelectingRotation" to="." method="_on_selecting_rotation_state_physics_processing"]
+[connection signal="state_entered" from="StateChart/Root/SelectingPower" to="." method="_on_selecting_power_state_entered"]
+[connection signal="state_exited" from="StateChart/Root/SelectingPower" to="." method="_on_selecting_power_state_exited"]
 [connection signal="state_physics_processing" from="StateChart/Root/SelectingPower" to="." method="_on_selecting_power_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/Shooting" to="." method="_on_shooting_state_entered"]
