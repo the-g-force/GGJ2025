@@ -9,9 +9,7 @@ enum Facing {LEFT,RIGHT}
 
 @onready var _path_follow = $Path3D/PathFollow3D
 @onready var _rotation_indicator := $RotationIndicator
-@onready var _anim_player := $AnimationPlayer
-
-var _increasing := true
+@onready var _timer := $PingPongTimer
 
 ## Public and exported so it can be animated
 @export var power_ratio := 0.5:
@@ -25,35 +23,23 @@ func action_pressed() -> void:
 	$StateChart.send_event('action_pressed')
 
 
-func _on_selecting_position_state_physics_processing(delta: float) -> void:
-	if _increasing:
-		_path_follow.progress_ratio += speed * delta
-		if _path_follow.progress_ratio >= 1.0:
-			_path_follow.progress_ratio -= _path_follow.progress_ratio - 1.0
-			_increasing = false
-	else:
-		_path_follow.progress_ratio -= speed * delta
-		if _path_follow.progress_ratio <= 0:
-			_path_follow.progress_ratio = -_path_follow.progress_ratio
-			_increasing = true
+func _on_selecting_position_state_physics_processing(_delta: float) -> void:
+	_path_follow.progress_ratio = _timer.value
 
 
 func _on_selecting_rotation_state_entered() -> void:
 	_rotation_indicator.global_position = _path_follow.global_position
 	_rotation_indicator.visible = true
-	_anim_player.play("angle_selection")
+	
 
 
-func _on_selecting_rotation_state_exited() -> void:
-	_anim_player.stop(true)
+func _on_selecting_rotation_state_physics_processing(_delta: float) -> void:
+	_rotation_indicator.rotation.y = remap(_timer.value, 0, 1, -TAU/8,TAU/8)
 
 
-func _on_selecting_power_state_entered() -> void:
-	_anim_player.play("power_selection")
 
-
-func _on_selecting_power_state_exited() -> void:
-	_anim_player.stop(true)
+func _on_selecting_power_state_physics_processing(_delta: float) -> void:
+	power_ratio = _timer.value
 
 
 func _on_shooting_state_entered() -> void:
