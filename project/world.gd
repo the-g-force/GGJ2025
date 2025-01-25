@@ -90,6 +90,8 @@ func _animate_change_to(target : Camera3D) -> void:
 
 
 func _on_end_of_round_state_entered() -> void:
+	_switch_to_angled_camera()
+	%EndOfRoundView.visible = true
 	%EndOfRoundCanvas.visible = true
 	_score_round()
 
@@ -114,6 +116,8 @@ func _score_round() -> void:
 
 
 func _on_end_of_round_state_exited() -> void:
+	_switch_to_play_camera()
+	%EndOfRoundView.visible = false
 	%EndOfRoundCanvas.visible = false
 	var bubbles := get_tree().get_nodes_in_group("bubble")
 	for bubble in bubbles:

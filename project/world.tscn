@@ -1,4 +1,4 @@
-[gd_scene load_steps=14 format=3 uid="uid://ufd5eevjf1il"]
+[gd_scene load_steps=15 format=3 uid="uid://ufd5eevjf1il"]
 
 [ext_resource type="PackedScene" uid="uid://big8tl0nt1wgj" path="res://launcher/launcher.tscn" id="1_8fowb"]
 [ext_resource type="Script" path="res://world.gd" id="1_hffby"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_mv47d"]
 [ext_resource type="Theme" uid="uid://cby03jpamd07p" path="res://common/theme.tres" id="8_8wvt2"]
 [ext_resource type="PackedScene" uid="uid://bqw81ep4b10p" path="res://title/logo.glb" id="9_pg36h"]
+[ext_resource type="PackedScene" uid="uid://dy3b5e2gwhlyf" path="res://messages/round_over.glb" id="9_rggwk"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_74gm6"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -111,25 +112,31 @@ delay_in_seconds = "0.0"
 [node name="Done" type="Node" parent="StateChart/Main"]
 script = ExtResource("6_d2iue")
 
-[node name="EndOfRoundCanvas" type="CanvasLayer" parent="."]
+[node name="EndOfRoundView" type="Node3D" parent="."]
 unique_name_in_owner = true
 visible = false
 
-[node name="Label" type="Label" parent="EndOfRoundCanvas"]
+[node name="EndOfRoundCanvas" type="CanvasLayer" parent="EndOfRoundView"]
+unique_name_in_owner = true
+visible = false
+
+[node name="Label" type="Label" parent="EndOfRoundView/EndOfRoundCanvas"]
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
 offset_left = -77.0
-offset_top = -23.5
+offset_top = 86.0
 offset_right = 77.0
-offset_bottom = 23.5
+offset_bottom = 133.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("8_8wvt2")
-text = "End of Round
-Press Any Key"
+text = "Press Any Key"
+
+[node name="round_over" parent="EndOfRoundView" instance=ExtResource("9_rggwk")]
+transform = Transform3D(-3, -4.9999e-08, -4.35155e-07, 7.28628e-08, 2.8819, -0.833452, 4.31915e-07, -0.833452, -2.8819, 0, 4.30496, -1.71285)
 
 [node name="HUD" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
