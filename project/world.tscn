@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ufd5eevjf1il"]
+[gd_scene load_steps=14 format=3 uid="uid://ufd5eevjf1il"]
 
 [ext_resource type="PackedScene" uid="uid://big8tl0nt1wgj" path="res://launcher/launcher.tscn" id="1_8fowb"]
 [ext_resource type="Script" path="res://world.gd" id="1_hffby"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" path="res://addons/godot_state_charts/atomic_state.gd" id="6_d2iue"]
 [ext_resource type="Script" path="res://addons/godot_state_charts/transition.gd" id="7_mv47d"]
 [ext_resource type="PackedScene" uid="uid://68dxwb7tib05" path="res://goblin/goblin.tscn" id="8_qfd2a"]
+[ext_resource type="PackedScene" uid="uid://bqw81ep4b10p" path="res://title/logo.glb" id="9_pg36h"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_74gm6"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -30,7 +31,7 @@ radius = 9.0
 script = ExtResource("1_hffby")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
+transform = Transform3D(-0.869103, -0.428291, 0.24744, 0.42628, -0.39481, 0.813886, -0.250888, 0.812829, 0.525703, 0, 5.53278, 5.98911)
 shadow_enabled = true
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -66,7 +67,16 @@ script = ExtResource("4_qfl2r")
 
 [node name="Main" type="Node" parent="StateChart"]
 script = ExtResource("5_cwv3t")
-initial_state = NodePath("Normal")
+initial_state = NodePath("Title")
+
+[node name="Title" type="Node" parent="StateChart/Main"]
+script = ExtResource("6_d2iue")
+
+[node name="ToNormal" type="Node" parent="StateChart/Main/Title"]
+script = ExtResource("7_mv47d")
+to = NodePath("../../Normal")
+event = &"start"
+delay_in_seconds = "0.0"
 
 [node name="Normal" type="Node" parent="StateChart/Main"]
 script = ExtResource("6_d2iue")
@@ -80,9 +90,11 @@ delay_in_seconds = "0.0"
 [node name="Done" type="Node" parent="StateChart/Main"]
 script = ExtResource("6_d2iue")
 
-[node name="CanvasLayer" type="CanvasLayer" parent="."]
+[node name="HUD" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+visible = false
 
-[node name="LeftBox" type="VBoxContainer" parent="CanvasLayer"]
+[node name="LeftBox" type="VBoxContainer" parent="HUD"]
 anchors_preset = 2
 anchor_top = 1.0
 anchor_bottom = 1.0
@@ -90,16 +102,16 @@ offset_top = -50.0
 offset_right = 40.0
 grow_vertical = 0
 
-[node name="LeftScore" type="Label" parent="CanvasLayer/LeftBox"]
+[node name="LeftScore" type="Label" parent="HUD/LeftBox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Score: 0"
 
-[node name="LeftShotsRemaining" type="Label" parent="CanvasLayer/LeftBox"]
+[node name="LeftShotsRemaining" type="Label" parent="HUD/LeftBox"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="RightBox" type="VBoxContainer" parent="CanvasLayer"]
+[node name="RightBox" type="VBoxContainer" parent="HUD"]
 anchors_preset = 3
 anchor_left = 1.0
 anchor_top = 1.0
@@ -110,18 +122,55 @@ offset_top = -50.0
 grow_horizontal = 0
 grow_vertical = 0
 
-[node name="RightScore" type="Label" parent="CanvasLayer/RightBox"]
+[node name="RightScore" type="Label" parent="HUD/RightBox"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Score: 0"
 
-[node name="RightShotsRemaining" type="Label" parent="CanvasLayer/RightBox"]
+[node name="RightShotsRemaining" type="Label" parent="HUD/RightBox"]
 unique_name_in_owner = true
 layout_mode = 2
 
 [node name="Goblin" parent="." instance=ExtResource("8_qfd2a")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.19425, 0.25, -1.93494)
 
+[node name="Logo" parent="." instance=ExtResource("9_pg36h")]
+unique_name_in_owner = true
+transform = Transform3D(-4, 0, -3.49691e-07, 9.71504e-08, 3.84254, -1.11127, 3.35925e-07, -1.11127, -3.84254, 0, 4.30496, -1.71285)
+
+[node name="TitleCanvasLayer" type="CanvasLayer" parent="."]
+unique_name_in_owner = true
+
+[node name="PlayButton" type="Button" parent="TitleCanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -4.0
+offset_top = -4.0
+offset_right = 4.0
+offset_bottom = 4.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "Begin Game"
+
+[node name="Label" type="Label" parent="TitleCanvasLayer"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -98.5
+offset_top = 40.0
+offset_right = 98.5
+offset_bottom = 63.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "A Global Game Jam Game"
+
 [connection signal="body_exited" from="BoardZone" to="." method="_on_board_zone_body_exited"]
+[connection signal="state_exited" from="StateChart/Main/Title" to="." method="_on_title_state_exited"]
 [connection signal="state_entered" from="StateChart/Main/Normal" to="." method="_on_normal_state_entered"]
 [connection signal="state_entered" from="StateChart/Main/Done" to="." method="_on_done_state_entered"]
+[connection signal="pressed" from="TitleCanvasLayer/PlayButton" to="." method="_on_play_button_pressed"]

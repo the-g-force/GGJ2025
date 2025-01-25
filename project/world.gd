@@ -30,6 +30,8 @@ func _on_board_zone_body_exited(body: Node3D) -> void:
 
 
 func _on_normal_state_entered() -> void:
+	%HUD.visible = true
+	
 	while %LeftLauncher.shots_remaining > 0:
 		for launcher in [left_launcher, right_launcher]:
 			launcher.start_turn()
@@ -60,3 +62,12 @@ func _on_done_state_entered() -> void:
 			_right_score += points_for_bubble * (1 + bubble.goblins)
 	%LeftScore.text = "Score: %d" % _left_score
 	%RightScore.text = "Score: %d" % _right_score
+
+
+func _on_title_state_exited() -> void:
+	%Logo.visible = false
+	%TitleCanvasLayer.visible = false
+
+
+func _on_play_button_pressed() -> void:
+	$StateChart.send_event("start")
