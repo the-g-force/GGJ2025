@@ -1,0 +1,15 @@
+[gd_scene load_steps=2 format=3 uid="uid://cej3f6jpl1tuu"]
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_nwlbb"]
+height = 0.5
+radius = 10.0
+
+[node name="StaticBody3D" type="StaticBody3D"]
+
+[node name="Table" type="CSGCylinder3D" parent="."]
+radius = 10.0
+height = 0.5
+sides = 64
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_nwlbb")

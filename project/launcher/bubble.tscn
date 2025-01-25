@@ -1,0 +1,22 @@
+[gd_scene load_steps=5 format=3 uid="uid://b2pj4dd1ctr83"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_57hc0"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_wxa28"]
+albedo_color = Color(0.113725, 0.231373, 1, 1)
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_j7se4"]
+material = SubResource("StandardMaterial3D_wxa28")
+height = 0.25
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_pnret"]
+height = 0.25
+
+[node name="Bubble" type="RigidBody3D"]
+physics_material_override = SubResource("PhysicsMaterial_57hc0")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("CylinderMesh_j7se4")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("CylinderShape3D_pnret")

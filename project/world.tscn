@@ -1,6 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://ufd5eevjf1il"]
 
-[ext_resource type="PackedScene" uid="uid://0r4f1cldyrke" path="res://table.tscn" id="2_2xnnm"]
+[ext_resource type="PackedScene" uid="uid://dh2pbog46fjge" path="res://launcher/launcher.tscn" id="1_8fowb"]
+[ext_resource type="Script" path="res://world.gd" id="1_hffby"]
+[ext_resource type="PackedScene" uid="uid://cej3f6jpl1tuu" path="res://table/table.tscn" id="2_k4tch"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_74gm6"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -15,14 +17,8 @@ sky = SubResource("Sky_fefn7")
 tonemap_mode = 2
 glow_enabled = true
 
-[sub_resource type="SphereMesh" id="SphereMesh_5ppms"]
-radius = 0.3
-height = 0.6
-
-[sub_resource type="SphereShape3D" id="SphereShape3D_mlif3"]
-radius = 0.3
-
 [node name="World" type="Node3D"]
+script = ExtResource("1_hffby")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.866025, -0.433013, 0.25, 0, 0.5, 0.866025, -0.5, 0.75, -0.433013, 0, 0, 0)
@@ -31,20 +27,11 @@ shadow_enabled = true
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_52yug")
 
-[node name="Ball" type="RigidBody3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.52971, 1.32816, 0)
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Ball"]
-mesh = SubResource("SphereMesh_5ppms")
-metadata/_edit_lock_ = true
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="Ball"]
-shape = SubResource("SphereShape3D_mlif3")
-metadata/_edit_lock_ = true
-
-[node name="Table" parent="." instance=ExtResource("2_2xnnm")]
-transform = Transform3D(1, 0, 0, 0, 0.992546, -0.121869, 0, 0.121869, 0.992546, 0, 0, 0)
-
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.489307, 0.872112, 0, -0.872112, 0.489307, 0, 7.40138, 7.71143)
-fov = 95.5287
+transform = Transform3D(1, 0, 0, 0, 0.176157, 0.984362, 0, -0.984362, 0.176157, 0, 13.4996, 2.66343)
+
+[node name="Table" parent="." instance=ExtResource("2_k4tch")]
+
+[node name="LeftLauncher" parent="." instance=ExtResource("1_8fowb")]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10, 0.5, 0)
