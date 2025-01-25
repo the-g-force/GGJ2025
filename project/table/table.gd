@@ -9,3 +9,8 @@ func _ready() -> void:
 		var peg := preload("res://table/peg.tscn").instantiate()
 		peg.translate(Vector3(peg_radius,0,0).rotated(Vector3.UP, TAU/6 * i))
 		add_child(peg)
+		
+		var goblin := preload("res://goblin/goblin.tscn").instantiate()
+		goblin.position = Vector3.RIGHT.rotated(Vector3.UP, TAU * i / 6 + TAU / 12)\
+			* peg_radius
+		add_child(goblin)
