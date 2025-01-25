@@ -34,3 +34,8 @@ transform = Transform3D(1, 0, 0, 0, 0.176157, 0.984362, 0, -0.984362, 0.176157, 
 
 [node name="LeftLauncher" parent="." instance=ExtResource("1_8fowb")]
 unique_name_in_owner = true
+
+[node name="RightLauncher" parent="." instance=ExtResource("1_8fowb")]
+unique_name_in_owner = true
+transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 10, 0, 0)
+facing = 0
