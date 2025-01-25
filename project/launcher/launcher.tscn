@@ -1,8 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://nf146x3l2j1"]
-
-[ext_resource type="Script" path="res://launcher/launcher.gd" id="1_hwwg4"]
-[ext_resource type="PackedScene" uid="uid://b2pj4dd1ctr83" path="res://launcher/bubble.tscn" id="2_8j4tv"]
-
-[node name="Launcher" type="Node3D"]
-script = ExtResource("1_hwwg4")
-projectile_scene = ExtResource("2_8j4tv")
