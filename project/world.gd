@@ -96,18 +96,19 @@ func _on_end_of_round_state_entered() -> void:
 
 func _score_round() -> void:
 	for bubble : RigidBody3D in get_tree().get_nodes_in_group("bubble"):
-		var points_for_bubble := 0
-		var distance_from_center := Vector2(bubble.global_position.x, bubble.global_position.z).length()
-		if distance_from_center <= inner_scoring_ring_radius:
-			points_for_bubble = 15
-		elif distance_from_center <= outer_scoring_ring_radius:
-			points_for_bubble = 10
-		else:
-			points_for_bubble = 5
-		if bubble.id == 0:
-			_left_score += points_for_bubble * (1 + bubble.goblins)
-		else:
-			_right_score += points_for_bubble * (1 + bubble.goblins)
+		if not bubble.popping:
+			var points_for_bubble := 0
+			var distance_from_center := Vector2(bubble.global_position.x, bubble.global_position.z).length()
+			if distance_from_center <= inner_scoring_ring_radius:
+				points_for_bubble = 15
+			elif distance_from_center <= outer_scoring_ring_radius:
+				points_for_bubble = 10
+			else:
+				points_for_bubble = 5
+			if bubble.id == 0:
+				_left_score += points_for_bubble * (1 + bubble.goblins)
+			else:
+				_right_score += points_for_bubble * (1 + bubble.goblins)
 	%LeftScore.text = "Score: %d" % _left_score
 	%RightScore.text = "Score: %d" % _right_score
 

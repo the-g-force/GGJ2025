@@ -10,6 +10,7 @@ var id := -1 :
 		_update_bubble_material()
 		_update_particle_mesh()
 var goblins := 0
+var popping := false
 
 
 func _update_bubble_material() -> void:
@@ -40,6 +41,7 @@ func absorb_goblin() -> void:
 
 func pop() -> void:
 	sleeping = true
+	popping = true
 	$AnimationPlayer.stop()
 	$CPUParticles3D.emitting = true
 	get_tree().create_tween()\
