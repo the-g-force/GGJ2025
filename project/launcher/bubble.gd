@@ -45,6 +45,9 @@ func pop() -> void:
 	get_tree().create_tween()\
 		.tween_method(func (value): _material.set_shader_parameter("y_threshold", value), 1.0, 0.0, 0.3)\
 		.set_trans(Tween.TRANS_SINE)
-	get_tree().create_tween().tween_property($Goblin, "position", Vector3(0, -1, 0), 0.5).set_trans(Tween.TRANS_QUAD)
+	
+	# Warnings came from here when popping at end of round. Commenting out for now.
+	#get_tree().create_tween().tween_property($Goblin, "position", Vector3(0, -1, 0), 0.5).set_trans(Tween.TRANS_QUAD)
+	
 	await $CPUParticles3D.finished
 	queue_free()

@@ -2,6 +2,7 @@ extends Node3D
 
 signal _settled
 
+@export var shots_per_round := 1
 @export var inner_scoring_ring_radius := 3.0
 @export var outer_scoring_ring_radius := 6.0
 
@@ -37,6 +38,9 @@ func _on_board_zone_body_exited(body: Node3D) -> void:
 
 
 func _on_normal_state_entered() -> void:
+	for launcher in [left_launcher,right_launcher]:
+		launcher.shots_remaining = shots_per_round
+	
 	_switch_to_play_camera()
 	%HUD.visible = true
 	
@@ -46,7 +50,11 @@ func _on_normal_state_entered() -> void:
 			await launcher.shot
 			await _settled
 	
-	$StateChart.send_event("done")
+	var is_game_over := _left_score >= 100 or _right_score >= 100
+	if is_game_over:
+		$StateChart.send_event("game_ended")
+	else:
+		$StateChart.send_event("round_ended")
 
 
 func _on_launcher_out_of_shots() -> void:
@@ -56,21 +64,6 @@ func _on_launcher_out_of_shots() -> void:
 
 func _on_done_state_entered() -> void:
 	_switch_to_angled_camera()
-	for bubble : RigidBody3D in get_tree().get_nodes_in_group("bubble"):
-		var points_for_bubble := 0
-		var distance_from_center := Vector2(bubble.global_position.x, bubble.global_position.z).length()
-		if distance_from_center <= inner_scoring_ring_radius:
-			points_for_bubble = 15
-		elif distance_from_center <= outer_scoring_ring_radius:
-			points_for_bubble = 10
-		else:
-			points_for_bubble = 5
-		if bubble.id == 0:
-			_left_score += points_for_bubble * (1 + bubble.goblins)
-		else:
-			_right_score += points_for_bubble * (1 + bubble.goblins)
-	%LeftScore.text = "Score: %d" % _left_score
-	%RightScore.text = "Score: %d" % _right_score
 
 
 func _on_title_state_exited() -> void:
@@ -94,3 +87,38 @@ func _animate_change_to(target : Camera3D) -> void:
 	var tween := create_tween()
 	tween.tween_property(_camera, "global_transform", target.global_transform, 1.0)
 	tween.parallel().tween_property(_camera, "size", target.size, 1.0)
+
+
+func _on_end_of_round_state_entered() -> void:
+	%EndOfRoundCanvas.visible = true
+	_score_round()
+
+
+func _score_round() -> void:
+	for bubble : RigidBody3D in get_tree().get_nodes_in_group("bubble"):
+		var points_for_bubble := 0
+		var distance_from_center := Vector2(bubble.global_position.x, bubble.global_position.z).length()
+		if distance_from_center <= inner_scoring_ring_radius:
+			points_for_bubble = 15
+		elif distance_from_center <= outer_scoring_ring_radius:
+			points_for_bubble = 10
+		else:
+			points_for_bubble = 5
+		if bubble.id == 0:
+			_left_score += points_for_bubble * (1 + bubble.goblins)
+		else:
+			_right_score += points_for_bubble * (1 + bubble.goblins)
+	%LeftScore.text = "Score: %d" % _left_score
+	%RightScore.text = "Score: %d" % _right_score
+
+
+func _on_end_of_round_state_exited() -> void:
+	%EndOfRoundCanvas.visible = false
+	var bubbles := get_tree().get_nodes_in_group("bubble")
+	for bubble in bubbles:
+		bubble.pop()
+
+
+func _on_end_of_round_state_input(event: InputEvent) -> void:
+	if event is InputEventKey and event.pressed:
+		$StateChart.send_event("start_next_round")
