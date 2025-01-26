@@ -1,7 +1,6 @@
-[gd_scene load_steps=7 format=3 uid="uid://68dxwb7tib05"]
+[gd_scene load_steps=6 format=3 uid="uid://68dxwb7tib05"]
 
 [ext_resource type="Script" path="res://goblin/goblin.gd" id="1_o1otg"]
-[ext_resource type="PackedScene" uid="uid://d32ugf1lnfpfw" path="res://goblin/goblin.glb" id="2_6qpuq"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_pki5q"]
 size = Vector3(0.3, 0.3, 0.3)
@@ -11,19 +10,19 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("goblin:rotation")
+tracks/0/path = NodePath("GoblinHandle:position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Vector3(0, -1.5708, 0)]
+"values": [Vector3(0, 0.313, 0)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("goblin:position")
+tracks/1/path = NodePath("GoblinHandle:rotation")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -40,26 +39,26 @@ loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("goblin:rotation")
+tracks/0/path = NodePath("GoblinHandle:rotation")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.233333, 0.5, 0.766667, 1, 1.26667, 1.46667),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1.68179, 1, 1),
+"times": PackedFloat32Array(0, 0.233333, 0.466667, 0.833333, 1.06667, 1.4, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(0, -3.14159, 0), Vector3(0, -3.14159, -0.10472), Vector3(0, -3.49066, 0.113446), Vector3(0, -3.14159, 0), Vector3(0, -3.14159, -0.10472), Vector3(0, -2.79253, 0.113446), Vector3(0, -3.14159, 0)]
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0.134111), Vector3(0, 0, -0.177785), Vector3(0, 0, 0), Vector3(0, 0, 0.134111), Vector3(0, 0, -0.177785), Vector3(0, 0, 0.0241246)]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("goblin:position")
+tracks/1/path = NodePath("GoblinHandle:position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.233333, 0.766667, 1, 1.46667, 1.63333),
-"transitions": PackedFloat32Array(1, 0.574349, 1, 1, 0.329877, 1.41421),
+"times": PackedFloat32Array(0, 0.233333, 0.466667, 0.833333, 1.06667, 1.43333, 1.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
 "update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0.02, 0), Vector3(0, 0, 0), Vector3(0, 0.02, 0), Vector3(0, 0, 0), Vector3(0, 0.0962712, 0)]
+"values": [Vector3(0, 0.313, 0), Vector3(0, 0.370882, 0), Vector3(0, 0.31635, 0), Vector3(0, 0.313, 0), Vector3(0, 0.370882, 0), Vector3(0, 0.31635, 0), Vector3(0, 0.429018, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_8icyl"]
@@ -75,8 +74,8 @@ script = ExtResource("1_o1otg")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.15, 0)
 shape = SubResource("BoxShape3D_pki5q")
 
-[node name="goblin" parent="." instance=ExtResource("2_6qpuq")]
-transform = Transform3D(-3.61999e-06, 0, -1, 0, 1, 0, 1, 0, -3.61999e-06, 0, 0, 0)
+[node name="Timer" type="Timer" parent="."]
+one_shot = true
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
@@ -84,8 +83,8 @@ libraries = {
 }
 autoplay = "hopplejump"
 
-[node name="Timer" type="Timer" parent="."]
-one_shot = true
+[node name="GoblinHandle" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.313, 0)
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

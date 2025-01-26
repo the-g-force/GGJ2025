@@ -34,10 +34,12 @@ func _update_particle_mesh() -> void:
 	$CPUParticles3D.mesh = mesh
 
 
-func absorb_goblin() -> void:
+func absorb_goblin(path: String) -> void:
+	if $Goblin.get_child_count() == 0: # don't have multiple goblin meshes in the bubble
+		var goblin_glb : Node3D = load(path).instantiate()
+		$Goblin.add_child(goblin_glb)
 	goblins += 1
 	mass += 1
-	$Goblin.visible = true
 	# apply friction
 	apply_central_impulse(-linear_velocity * GOBLIN_INTERACTION_FRICTION)
 
