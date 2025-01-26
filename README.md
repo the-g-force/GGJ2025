@@ -2,6 +2,8 @@
 
 A game created for [Global Game Jam 2025](https://globalgamejam.org/jam-sites/2025/ball-state-university).
 
+_Gubbles_ is a two-player game inspired by [_Crokinole_](https://boardgamegeek.com/boardgame/521/crokinole). On your turn, blow your bubble toward the center of the board to get the most points. Capture a goblin for a bonus.
+
 ## Third-Party Assets
 
 - [Kenney's Input Prompts](https://globalgamejam.org/jam-sites/2025/ball-state-university) are used under [CC0](https://creativecommons.org/publicdomain/zero/1.0/)
