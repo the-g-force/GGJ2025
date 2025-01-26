@@ -43,6 +43,7 @@ func pop() -> void:
 	sleeping = true
 	popping = true
 	$AnimationPlayer.stop()
+	$Goblin.hide()
 	$CPUParticles3D.emitting = true
 	get_tree().create_tween()\
 		.tween_method(func (value): _material.set_shader_parameter("y_threshold", value), 1.0, 0.0, 0.3)\
