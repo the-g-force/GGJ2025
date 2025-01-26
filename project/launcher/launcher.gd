@@ -79,7 +79,7 @@ func _on_selecting_power_state_physics_processing(_delta: float) -> void:
 
 func _on_shooting_state_entered() -> void:
 	_launch()
-	_wand.rotation = Vector3.ZERO
+	create_tween().tween_property(_wand, "rotation", Vector3.ZERO, 0.35).set_ease(Tween.EASE_IN)
 	$StateChart.send_event("shot")
 
 
