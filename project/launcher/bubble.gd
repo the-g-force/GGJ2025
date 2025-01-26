@@ -12,6 +12,8 @@ var id := -1 :
 var goblins := 0
 var popping := false
 
+@onready var _score_popup := $ScorePopup
+
 
 func _update_bubble_material() -> void:
 	var new_material := ShaderMaterial.new()
@@ -45,6 +47,7 @@ func pop() -> void:
 	$AnimationPlayer.stop()
 	$Goblin.hide()
 	$CPUParticles3D.emitting = true
+	_score_popup.hide()
 	get_tree().create_tween()\
 		.tween_method(func (value): _material.set_shader_parameter("y_threshold", value), 1.0, 0.0, 0.3)\
 		.set_trans(Tween.TRANS_SINE)
@@ -54,3 +57,8 @@ func pop() -> void:
 	
 	await $CPUParticles3D.finished
 	queue_free()
+
+
+func score(amount: int) -> void:
+	_score_popup.text = "+%d" % amount
+	_score_popup.modulate = COLORS[id].lightened(0.2)

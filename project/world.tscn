@@ -35,6 +35,7 @@ radius = 9.0
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_hffby")
+shots_per_round = 1
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.825272, -0.563116, 0.0427349, 0.489885, -0.67619, 0.550254, -0.28096, 0.475045, 0.833903, 0, 5.53278, 5.98911)

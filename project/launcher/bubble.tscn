@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://b2pj4dd1ctr83"]
+[gd_scene load_steps=14 format=3 uid="uid://b2pj4dd1ctr83"]
 
 [ext_resource type="Script" path="res://launcher/bubble.gd" id="1_ax73q"]
 [ext_resource type="PackedScene" uid="uid://d32ugf1lnfpfw" path="res://goblin/goblin.glb" id="2_0hxqs"]
 [ext_resource type="Shader" path="res://launcher/bubble.gdshader" id="2_35nyv"]
+[ext_resource type="FontFile" uid="uid://r2kfcfafh3yo" path="res://common/Gluten-VariableFont_slnt,wght.ttf" id="4_f5x34"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_57hc0"]
 friction = 0.2
@@ -85,6 +86,10 @@ _data = {
 "goblintime": SubResource("Animation_dx3n6")
 }
 
+[sub_resource type="FontVariation" id="FontVariation_d6rbe"]
+base_font = ExtResource("4_f5x34")
+variation_embolden = 1.5
+
 [node name="Bubble" type="RigidBody3D" groups=["bubble"]]
 axis_lock_angular_x = true
 axis_lock_angular_z = true
@@ -122,3 +127,9 @@ libraries = {
 "": SubResource("AnimationLibrary_venp8")
 }
 autoplay = "goblintime"
+
+[node name="ScorePopup" type="Label3D" parent="."]
+transform = Transform3D(-1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, -1, 0, 0.978383, 0)
+billboard = 1
+font = SubResource("FontVariation_d6rbe")
+font_size = 120

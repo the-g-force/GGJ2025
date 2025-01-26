@@ -115,10 +115,12 @@ func _score_round() -> void:
 				points_for_bubble = 10
 			else:
 				points_for_bubble = 5
+			points_for_bubble *= (1 + bubble.goblins)
+			bubble.score(points_for_bubble)
 			if bubble.id == 0:
-				_left_score += points_for_bubble * (1 + bubble.goblins)
+				_left_score += points_for_bubble
 			else:
-				_right_score += points_for_bubble * (1 + bubble.goblins)
+				_right_score += points_for_bubble
 	_update_score_labels()
 
 
