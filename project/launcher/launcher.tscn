@@ -40,7 +40,7 @@ unique_name_in_owner = true
 
 [node name="PowerIndicator" type="MeshInstance3D" parent="Path3D/PathFollow3D/Wand"]
 unique_name_in_owner = true
-transform = Transform3D(8.41822e-05, -0.999958, -0.00917708, 0.999958, -4.37114e-08, 0.00917747, -0.00917708, -0.00917747, 0.999916, -1.18693, 0, -0.0108934)
+transform = Transform3D(8.41822e-05, -0.999958, -0.00917708, 0.999958, -4.37114e-08, 0.00917747, -0.00917708, -0.00917747, 0.999916, -1.1, 0, 0)
 visible = false
 mesh = SubResource("CylinderMesh_aul32")
 skeleton = NodePath("../../OldWand")

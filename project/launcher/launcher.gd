@@ -19,6 +19,7 @@ signal shot
 	set(value):
 		power_ratio = value
 		%PowerIndicator.scale.y = remap(power_ratio, 0, 1, 0.5, 1)
+		%PowerIndicator.position.x = -%PowerIndicator.scale.y - 0.2
 
 
 func _ready() -> void:
