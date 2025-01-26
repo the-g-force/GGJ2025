@@ -179,6 +179,7 @@ transform = Transform3D(-3, -4.9999e-08, -4.35155e-07, 7.28628e-08, 2.8819, -0.8
 
 [node name="HUD" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
+visible = false
 
 [node name="Control" type="Control" parent="HUD"]
 layout_mode = 3
