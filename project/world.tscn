@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ufd5eevjf1il"]
+[gd_scene load_steps=21 format=3 uid="uid://ufd5eevjf1il"]
 
 [ext_resource type="PackedScene" uid="uid://big8tl0nt1wgj" path="res://launcher/launcher.tscn" id="1_8fowb"]
 [ext_resource type="Script" path="res://world.gd" id="1_hffby"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://dpqqyodixe7ew" path="res://messages/player_wins.glb" id="12_n6lg7"]
 [ext_resource type="Texture2D" uid="uid://cwqy00ifibl8x" path="res://messages/keyboard_z_outline.png" id="13_o3vpg"]
 [ext_resource type="Texture2D" uid="uid://c3y0x0qrr1ip2" path="res://messages/keyboard_slash_forward_outline.png" id="14_ad26v"]
+[ext_resource type="AudioStream" uid="uid://x3asv32v2w5k" path="res://theme.ogg" id="16_h6cg2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_74gm6"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -273,6 +274,11 @@ by Paul, Alex, and Leo
 
 Press Any Key to Play"
 horizontal_alignment = 1
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("16_h6cg2")
+autoplay = true
+bus = &"Music"
 
 [connection signal="body_exited" from="BoardZone" to="." method="_on_board_zone_body_exited"]
 [connection signal="state_entered" from="StateChart/Main/Title" to="." method="_on_title_state_entered"]
