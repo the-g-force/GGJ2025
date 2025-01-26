@@ -163,6 +163,7 @@ func _on_end_of_round_state_input(event: InputEvent) -> void:
 
 
 func _on_done_state_entered() -> void:
+	%HUD.visible = false
 	%EndOfGameView.visible = true
 	var blue_wins := _left_score > _right_score
 	%BlueModel.visible = blue_wins
