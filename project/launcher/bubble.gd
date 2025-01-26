@@ -50,6 +50,7 @@ func absorb_goblin(path: String) -> void:
 	mass += 1
 	# apply friction
 	apply_central_impulse(-linear_velocity * GOBLIN_INTERACTION_FRICTION)
+	Sfx.play_goblin_sound()
 
 
 func pop() -> void:
