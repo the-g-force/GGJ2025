@@ -8,6 +8,7 @@ signal shot
 @export var speed := 1.50
 @export var id := 0
 @export var input_action : String
+@export var attract_rotation_speed := 1.2
 
 @onready var _path_follow = $Path3D/PathFollow3D
 @onready var _timer := $PingPongTimer
@@ -24,8 +25,24 @@ func _ready() -> void:
 	_wand.color = PlayerColors.BLUE if id == 0 else PlayerColors.RED
 
 
+func begin_game() -> void:
+	$StateChart.send_event("begin_game")
+
+
 func start_turn() -> void:
 	$StateChart.send_event("start_turn")
+
+
+func enter_attract_mode() -> void:
+	$StateChart.send_event("enter_attract_mode")
+
+
+func _on_attract_state_physics_processing(delta: float) -> void:
+	_wand.rotate(Vector3.UP, TAU * attract_rotation_speed * delta)
+
+
+func _on_attract_state_exited() -> void:
+	create_tween().tween_property(_wand, "rotation:y", 0, 0.2)
 
 
 func _on_selecting_position_state_entered() -> void:

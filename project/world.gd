@@ -68,11 +68,15 @@ func _on_launcher_out_of_shots() -> void:
 func _on_title_state_entered() -> void:
 	%Logo.visible = true
 	%TitleCanvasLayer.visible = true
+	for launcher in [left_launcher, right_launcher]:
+		launcher.enter_attract_mode()
 
 
 func _on_title_state_exited() -> void:
 	%Logo.visible = false
 	%TitleCanvasLayer.visible = false
+	for launcher in [left_launcher, right_launcher]:
+		launcher.begin_game()
 
 
 func _on_title_state_input(event: InputEvent) -> void:

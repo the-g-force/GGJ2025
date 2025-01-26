@@ -54,7 +54,16 @@ script = ExtResource("3_tv4qt")
 
 [node name="Root" type="Node" parent="StateChart"]
 script = ExtResource("4_fb2ym")
-initial_state = NodePath("NotMyTurn")
+initial_state = NodePath("Attract")
+
+[node name="Attract" type="Node" parent="StateChart/Root"]
+script = ExtResource("4_rpfoh")
+
+[node name="ToNotMyTurn" type="Node" parent="StateChart/Root/Attract"]
+script = ExtResource("6_rl65k")
+to = NodePath("../../NotMyTurn")
+event = &"begin_game"
+delay_in_seconds = "0.0"
 
 [node name="NotMyTurn" type="Node" parent="StateChart/Root"]
 script = ExtResource("4_rpfoh")
@@ -63,6 +72,12 @@ script = ExtResource("4_rpfoh")
 script = ExtResource("6_rl65k")
 to = NodePath("../../SelectingPosition")
 event = &"start_turn"
+delay_in_seconds = "0.0"
+
+[node name="ToAttract" type="Node" parent="StateChart/Root/NotMyTurn"]
+script = ExtResource("6_rl65k")
+to = NodePath("../../Attract")
+event = &"enter_attract_mode"
 delay_in_seconds = "0.0"
 
 [node name="SelectingPosition" type="Node" parent="StateChart/Root"]
@@ -103,6 +118,8 @@ delay_in_seconds = "0.0"
 
 [node name="PingPongTimer" parent="." instance=ExtResource("7_jdk1g")]
 
+[connection signal="state_exited" from="StateChart/Root/Attract" to="." method="_on_attract_state_exited"]
+[connection signal="state_physics_processing" from="StateChart/Root/Attract" to="." method="_on_attract_state_physics_processing"]
 [connection signal="state_entered" from="StateChart/Root/SelectingPosition" to="." method="_on_selecting_position_state_entered"]
 [connection signal="state_physics_processing" from="StateChart/Root/SelectingPosition" to="." method="_on_selecting_position_state_physics_processing"]
 [connection signal="state_physics_processing" from="StateChart/Root/SelectingRotation" to="." method="_on_selecting_rotation_state_physics_processing"]
