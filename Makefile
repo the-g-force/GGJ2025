@@ -28,3 +28,4 @@ zip: windows linux
 	mkdir -p build/zip/press
 	cp -r press/* build/zip/press
 	cd build/zip;	zip $(name)-src.zip -r .
+	cd build; zip executables.zip -r windows linux
