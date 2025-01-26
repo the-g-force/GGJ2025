@@ -9,6 +9,21 @@ _data = {
 }
 point_count = 2
 
+[sub_resource type="Animation" id="Animation_dbuel"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PathFollow3D:progress_ratio")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
 [sub_resource type="Animation" id="Animation_7bnpj"]
 resource_name = "patrol"
 length = 10.0
@@ -26,21 +41,6 @@ tracks/0/keys = {
 "values": [0.0, 1.0]
 }
 
-[sub_resource type="Animation" id="Animation_dbuel"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PathFollow3D:progress_ratio")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_5p4so"]
 _data = {
 "RESET": SubResource("Animation_dbuel"),
@@ -51,7 +51,7 @@ _data = {
 curve = SubResource("Curve3D_vg2si")
 
 [node name="PathFollow3D" type="PathFollow3D" parent="."]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 5, 0, -0.405067)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 5, 0, -0.405068)
 progress = 2.09497
 
 [node name="Goblin" parent="PathFollow3D" instance=ExtResource("1_jmy0h")]

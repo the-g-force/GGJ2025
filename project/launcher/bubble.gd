@@ -60,8 +60,18 @@ func pop() -> void:
 
 
 func score() -> void:
-	_score_popup.text = "+%d" % points
 	_score_popup.modulate = COLORS[id].lightened(0.2)
+	_popup_score("+%d" % points)
+
+
+func _popup_score(text: String) -> void:
+	_score_popup.text = text
 	var tween := create_tween().set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(_score_popup, "position", Vector3.UP, 0.1)
 	tween.parallel().tween_property(_score_popup, "scale", Vector3.ONE, 0.1)
+
+
+func hide_score() -> void:
+	var tween := create_tween().set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(_score_popup, "position", Vector3.ZERO, 0.2)
+	tween.parallel().tween_property(_score_popup, "scale", Vector3.ZERO, 0.2)

@@ -208,3 +208,8 @@ func _on_scoring_state_entered() -> void:
 		$StateChart.send_event("game_over")
 	else:
 		$StateChart.send_event("round_over")
+
+
+func _on_scoring_state_exited() -> void:
+	for bubble in get_tree().get_nodes_in_group("bubble"):
+		bubble.hide_score()

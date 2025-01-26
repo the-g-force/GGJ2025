@@ -305,3 +305,4 @@ bus = &"Music"
 [connection signal="state_entered" from="StateChart/Main/Done" to="." method="_on_done_state_entered"]
 [connection signal="state_exited" from="StateChart/Main/Done" to="." method="_on_done_state_exited"]
 [connection signal="state_entered" from="StateChart/Main/Scoring" to="." method="_on_scoring_state_entered"]
+[connection signal="state_exited" from="StateChart/Main/Scoring" to="." method="_on_scoring_state_exited"]
