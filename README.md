@@ -11,3 +11,5 @@ A game created for [Global Game Jam 2025](https://globalgamejam.org/jam-sites/20
 - [Little Camera Preview](https://godotengine.org/asset-library/asset/2500) licensed under MIT
 
 - [Godot State Charts](https://godotengine.org/asset-library/asset/1778) licensed under MIT
+
+- [Godot Jolt Physics](https://godotengine.org/asset-library/asset/1918) licensed under MIT
