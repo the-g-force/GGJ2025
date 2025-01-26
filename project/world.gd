@@ -14,6 +14,7 @@ signal _camera_in_position
 
 var _left_score := 0
 var _right_score := 0
+var _rounds := 0
 
 var _camera : Camera3D
 
@@ -45,6 +46,8 @@ func _on_board_zone_body_exited(body: Node3D) -> void:
 
 
 func _on_normal_state_entered() -> void:
+	_rounds += 1
+	
 	for launcher in [left_launcher,right_launcher]:
 		launcher.shots_remaining = shots_per_round
 	
@@ -151,7 +154,7 @@ func _reset_board() -> void:
 	await get_tree().get_first_node_in_group("bubble").tree_exited
 	for goblin in get_tree().get_nodes_in_group("goblin"):
 		goblin.queue_free()
-	$Table.spawn_goblins()
+	$Table.spawn_goblins(_rounds)
 
 
 func _on_end_of_round_state_input(event: InputEvent) -> void:
@@ -173,6 +176,7 @@ func _on_done_state_exited() -> void:
 	%EndOfGameView.visible = false
 	_left_score = 0
 	_right_score = 0
+	_rounds = 0
 	_update_score_labels()
 	_reset_board()
 
