@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://ufd5eevjf1il"]
+[gd_scene load_steps=22 format=3 uid="uid://ufd5eevjf1il"]
 
 [ext_resource type="PackedScene" uid="uid://big8tl0nt1wgj" path="res://launcher/launcher.tscn" id="1_8fowb"]
 [ext_resource type="Script" path="res://world.gd" id="1_hffby"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://dpqqyodixe7ew" path="res://messages/player_wins.glb" id="12_n6lg7"]
 [ext_resource type="Texture2D" uid="uid://cwqy00ifibl8x" path="res://messages/keyboard_z_outline.png" id="13_o3vpg"]
 [ext_resource type="Texture2D" uid="uid://c3y0x0qrr1ip2" path="res://messages/keyboard_slash_forward_outline.png" id="14_ad26v"]
+[ext_resource type="Texture2D" uid="uid://cq2l5q3yu1aqe" path="res://messages/keyboard_m_outline.png" id="15_8w1hv"]
 [ext_resource type="AudioStream" uid="uid://x3asv32v2w5k" path="res://theme.ogg" id="16_h6cg2"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_74gm6"]
@@ -178,7 +179,6 @@ transform = Transform3D(-3, -4.9999e-08, -4.35155e-07, 7.28628e-08, 2.8819, -0.8
 
 [node name="HUD" type="CanvasLayer" parent="."]
 unique_name_in_owner = true
-visible = false
 
 [node name="Control" type="Control" parent="HUD"]
 layout_mode = 3
@@ -189,7 +189,7 @@ grow_horizontal = 2
 grow_vertical = 2
 theme = ExtResource("8_8wvt2")
 
-[node name="LeftBox" type="VBoxContainer" parent="HUD/Control"]
+[node name="BottomLeft" type="VBoxContainer" parent="HUD/Control"]
 layout_mode = 1
 anchors_preset = 2
 anchor_top = 1.0
@@ -198,21 +198,21 @@ offset_top = -50.0
 offset_right = 61.0
 grow_vertical = 0
 
-[node name="TextureRect" type="TextureRect" parent="HUD/Control/LeftBox"]
+[node name="TextureRect" type="TextureRect" parent="HUD/Control/BottomLeft"]
 layout_mode = 2
 texture = ExtResource("13_o3vpg")
 stretch_mode = 2
 
-[node name="LeftScore" type="Label" parent="HUD/Control/LeftBox"]
+[node name="LeftScore" type="Label" parent="HUD/Control/BottomLeft"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Score: 0"
 
-[node name="LeftShotsRemaining" type="Label" parent="HUD/Control/LeftBox"]
+[node name="LeftShotsRemaining" type="Label" parent="HUD/Control/BottomLeft"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="RightBox" type="VBoxContainer" parent="HUD/Control"]
+[node name="BottomRight" type="VBoxContainer" parent="HUD/Control"]
 layout_mode = 1
 anchors_preset = 3
 anchor_left = 1.0
@@ -225,19 +225,32 @@ grow_horizontal = 0
 grow_vertical = 0
 alignment = 2
 
-[node name="TextureRect" type="TextureRect" parent="HUD/Control/RightBox"]
+[node name="TextureRect" type="TextureRect" parent="HUD/Control/BottomRight"]
 layout_mode = 2
 texture = ExtResource("14_ad26v")
 stretch_mode = 2
 
-[node name="RightScore" type="Label" parent="HUD/Control/RightBox"]
+[node name="RightScore" type="Label" parent="HUD/Control/BottomRight"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "Score: 0"
 
-[node name="RightShotsRemaining" type="Label" parent="HUD/Control/RightBox"]
+[node name="RightShotsRemaining" type="Label" parent="HUD/Control/BottomRight"]
 unique_name_in_owner = true
 layout_mode = 2
+
+[node name="TopLeft" type="HBoxContainer" parent="HUD/Control"]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="TextureRect" type="TextureRect" parent="HUD/Control/TopLeft"]
+layout_mode = 2
+texture = ExtResource("15_8w1hv")
+
+[node name="Label" type="Label" parent="HUD/Control/TopLeft"]
+layout_mode = 2
+text = "Mute Music"
 
 [node name="Logo" parent="." instance=ExtResource("9_pg36h")]
 unique_name_in_owner = true

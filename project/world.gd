@@ -24,6 +24,10 @@ func _ready() -> void:
 
 
 func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("mute"):
+		var index := AudioServer.get_bus_index("Music")
+		AudioServer.set_bus_mute(index, not AudioServer.is_bus_mute(index))
+	
 	%LeftShotsRemaining.text = "Bubbles: %d" % %LeftLauncher.shots_remaining
 	%RightShotsRemaining.text = "Bubbles: %d" % %RightLauncher.shots_remaining
 	
