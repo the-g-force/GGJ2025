@@ -75,8 +75,9 @@ func _on_title_state_exited() -> void:
 	%TitleCanvasLayer.visible = false
 
 
-func _on_play_button_pressed() -> void:
-	$StateChart.send_event("start")
+func _on_title_state_input(event: InputEvent) -> void:
+	if _is_any_key_pressed(event):
+		$StateChart.send_event("start")
 
 
 func _switch_to_play_camera() -> void:
@@ -141,7 +142,7 @@ func _reset_board() -> void:
 
 
 func _on_end_of_round_state_input(event: InputEvent) -> void:
-	if event is InputEventKey and event.pressed:
+	if _is_any_key_pressed(event):
 		$StateChart.send_event("start_next_round")
 
 
@@ -162,3 +163,7 @@ func _on_done_state_exited() -> void:
 	_right_score = 0
 	_update_score_labels()
 	_reset_board()
+
+
+func _is_any_key_pressed(event : InputEvent) -> bool:
+	return event is InputEventKey and event.pressed
