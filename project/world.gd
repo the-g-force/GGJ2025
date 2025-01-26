@@ -169,5 +169,10 @@ func _on_done_state_exited() -> void:
 	_reset_board()
 
 
+## Check if a key was pressed so we can move on to a new state.
+##
+## Contrary to the name, this actually checks if a key was *released*,
+## because otherwise, one might press Z, trigger state change, release Z,
+## and trigger selecting blue's position, unintentionally.
 func _is_any_key_pressed(event : InputEvent) -> bool:
-	return event is InputEventKey and event.pressed
+	return event is InputEventKey and not event.pressed
