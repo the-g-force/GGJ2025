@@ -5,7 +5,7 @@ var color : Color:
 		color = value
 		_material.albedo_color = color
 
-var _material := StandardMaterial3D.new()
+var _material := preload("res://launcher/wand_material.tres").duplicate()
 
 
 func _ready() -> void:
