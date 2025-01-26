@@ -8,7 +8,13 @@ signal shot
 @export var speed := 1.50
 @export var id := 0
 @export var input_action : String
+
+@export_group("Attract mode")
 @export var attract_rotation_speed := 1.2
+## The amount the wands should raise in attract mode to stop them from clipping
+## the board.
+@export var attract_raise := 1.0
+@export var raise_duration := 0.25
 
 @onready var _path_follow = $Path3D/PathFollow3D
 @onready var _timer := $PingPongTimer
@@ -38,12 +44,17 @@ func enter_attract_mode() -> void:
 	$StateChart.send_event("enter_attract_mode")
 
 
+func _on_attract_state_entered() -> void:
+	create_tween().tween_property(_wand, "position:y", _wand.position.y+attract_raise, raise_duration)
+
+
 func _on_attract_state_physics_processing(delta: float) -> void:
 	_wand.rotate(Vector3.UP, TAU * attract_rotation_speed * delta)
 
 
 func _on_attract_state_exited() -> void:
 	create_tween().tween_property(_wand, "rotation:y", 0, 0.2)
+	create_tween().tween_property(_wand, "position:y", _wand.position.y-attract_raise, raise_duration)
 
 
 func _on_selecting_position_state_entered() -> void:
