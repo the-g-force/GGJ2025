@@ -12,7 +12,6 @@ const _POP_SOUNDS : Array[AudioStream] = [
 	preload("res://common/bubble_pop5.wav"),
 ]
 const _BUMP_SOUNDS : Array[AudioStream] = [
-	preload("res://common/bump.wav"),
 	preload("res://common/bump2.wav"),
 ]
 const _POLE_SOUNDS : Array[AudioStream] = _BUMP_SOUNDS
