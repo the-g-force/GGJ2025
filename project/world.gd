@@ -15,6 +15,7 @@ signal _camera_in_position
 var _left_score := 0
 var _right_score := 0
 var _rounds := 0
+var _left_first : bool
 
 var _camera : Camera3D
 
@@ -54,11 +55,16 @@ func _on_normal_state_entered() -> void:
 	_switch_to_play_camera()
 	%HUD.visible = true
 	
+	# If the left launcher has any shots, so does the right one.
 	while %LeftLauncher.shots_remaining > 0:
-		for launcher in [left_launcher, right_launcher]:
+		var order := [left_launcher, right_launcher] if _left_first else [right_launcher,left_launcher]
+		for launcher in order:
 			launcher.start_turn()
 			await launcher.shot
 			await _settled
+	
+	# After the round is over, alternate who goes first next
+	_left_first = not _left_first
 	
 	$StateChart.send_event("score_round")
 
@@ -69,6 +75,10 @@ func _on_launcher_out_of_shots() -> void:
 
 
 func _on_title_state_entered() -> void:
+	# Randomize who goes first
+	_left_first = randf() < 0.5
+	
+	# Update the UI
 	%Logo.visible = true
 	%TitleCanvasLayer.visible = true
 	for launcher in [left_launcher, right_launcher]:
