@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dwq8ppgvbsp80"
-path="res://.godot/imported/pole_bump.wav-454348bf5df509ef621dabc73a2eef8c.sample"
+uid="uid://3dyjeqeyowaf"
+path="res://.godot/imported/bump2.wav-32aee41a9addfb0e4afc0ed816181a95.sample"
 
 [deps]
 
-source_file="res://common/pole_bump.wav"
-dest_files=["res://.godot/imported/pole_bump.wav-454348bf5df509ef621dabc73a2eef8c.sample"]
+source_file="res://common/bump2.wav"
+dest_files=["res://.godot/imported/bump2.wav-32aee41a9addfb0e4afc0ed816181a95.sample"]
 
 [params]
 
