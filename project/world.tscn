@@ -35,7 +35,6 @@ radius = 9.0
 
 [node name="World" type="Node3D"]
 script = ExtResource("1_hffby")
-shots_per_round = 1
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.825272, -0.563116, 0.0427349, 0.489885, -0.67619, 0.550254, -0.28096, 0.475045, 0.833903, 0, 5.53278, 5.98911)
@@ -95,16 +94,10 @@ delay_in_seconds = "0.0"
 [node name="Normal" type="Node" parent="StateChart/Main"]
 script = ExtResource("6_d2iue")
 
-[node name="ToDone" type="Node" parent="StateChart/Main/Normal"]
+[node name="ToScoring" type="Node" parent="StateChart/Main/Normal"]
 script = ExtResource("7_mv47d")
-to = NodePath("../../Done")
-event = &"game_ended"
-delay_in_seconds = "0.0"
-
-[node name="ToEndOfRound" type="Node" parent="StateChart/Main/Normal"]
-script = ExtResource("7_mv47d")
-to = NodePath("../../EndOfRound")
-event = &"round_ended"
+to = NodePath("../../Scoring")
+event = &"score_round"
 delay_in_seconds = "0.0"
 
 [node name="EndOfRound" type="Node" parent="StateChart/Main"]
@@ -123,6 +116,21 @@ script = ExtResource("6_d2iue")
 script = ExtResource("7_mv47d")
 to = NodePath("../../Title")
 event = &"reset"
+delay_in_seconds = "0.0"
+
+[node name="Scoring" type="Node" parent="StateChart/Main"]
+script = ExtResource("6_d2iue")
+
+[node name="ToEndOfRound" type="Node" parent="StateChart/Main/Scoring"]
+script = ExtResource("7_mv47d")
+to = NodePath("../../EndOfRound")
+event = &"round_over"
+delay_in_seconds = "0.0"
+
+[node name="ToDone" type="Node" parent="StateChart/Main/Scoring"]
+script = ExtResource("7_mv47d")
+to = NodePath("../../Done")
+event = &"game_over"
 delay_in_seconds = "0.0"
 
 [node name="EndOfRoundView" type="Node3D" parent="."]
@@ -276,3 +284,4 @@ horizontal_alignment = 1
 [connection signal="state_input" from="StateChart/Main/EndOfRound" to="." method="_on_end_of_round_state_input"]
 [connection signal="state_entered" from="StateChart/Main/Done" to="." method="_on_done_state_entered"]
 [connection signal="state_exited" from="StateChart/Main/Done" to="." method="_on_done_state_exited"]
+[connection signal="state_entered" from="StateChart/Main/Scoring" to="." method="_on_scoring_state_entered"]

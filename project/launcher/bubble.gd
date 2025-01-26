@@ -11,6 +11,7 @@ var id := -1 :
 		_update_particle_mesh()
 var goblins := 0
 var popping := false
+var points := 0
 
 @onready var _score_popup := $ScorePopup
 
@@ -52,13 +53,13 @@ func pop() -> void:
 		.tween_method(func (value): _material.set_shader_parameter("y_threshold", value), 1.0, 0.0, 0.3)\
 		.set_trans(Tween.TRANS_SINE)
 	
-	# Warnings came from here when popping at end of round. Commenting out for now.
-	#get_tree().create_tween().tween_property($Goblin, "position", Vector3(0, -1, 0), 0.5).set_trans(Tween.TRANS_QUAD)
-	
 	await $CPUParticles3D.finished
 	queue_free()
 
 
-func score(amount: int) -> void:
-	_score_popup.text = "+%d" % amount
+func score() -> void:
+	_score_popup.text = "+%d" % points
 	_score_popup.modulate = COLORS[id].lightened(0.2)
+	var tween := create_tween().set_trans(Tween.TRANS_QUAD)
+	tween.tween_property(_score_popup, "position", Vector3.UP, 0.1)
+	tween.parallel().tween_property(_score_popup, "scale", Vector3.ONE, 0.1)

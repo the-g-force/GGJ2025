@@ -1,6 +1,8 @@
 extends Node3D
 
 signal _settled
+signal _all_bubbles_scored
+signal _camera_in_position
 
 @export var shots_per_round := 6
 @export var points_to_win := 100
@@ -51,13 +53,7 @@ func _on_normal_state_entered() -> void:
 			await launcher.shot
 			await _settled
 	
-	_score_round()
-	var is_game_over := _left_score != _right_score \
-		and (_left_score >= points_to_win or _right_score >= points_to_win)
-	if is_game_over:
-		$StateChart.send_event("game_ended")
-	else:
-		$StateChart.send_event("round_ended")
+	$StateChart.send_event("score_round")
 
 
 func _on_launcher_out_of_shots() -> void:
@@ -96,16 +92,19 @@ func _animate_change_to(target : Camera3D) -> void:
 	var tween := create_tween()
 	tween.tween_property(_camera, "global_transform", target.global_transform, 1.0)
 	tween.parallel().tween_property(_camera, "size", target.size, 1.0)
+	await tween.finished
+	_camera_in_position.emit()
 
 
 func _on_end_of_round_state_entered() -> void:
-	_switch_to_angled_camera()
 	%EndOfRoundView.visible = true
 	%EndOfRoundCanvas.visible = true
 
 
 func _score_round() -> void:
-	for bubble : RigidBody3D in get_tree().get_nodes_in_group("bubble"):
+	var bubbles := get_tree().get_nodes_in_group("bubble")
+	bubbles.shuffle()
+	for bubble in bubbles:
 		if not bubble.popping:
 			var points_for_bubble := 0
 			var distance_from_center := Vector2(bubble.global_position.x, bubble.global_position.z).length()
@@ -116,11 +115,15 @@ func _score_round() -> void:
 			else:
 				points_for_bubble = 5
 			points_for_bubble *= (1 + bubble.goblins)
-			bubble.score(points_for_bubble)
+			bubble.points = points_for_bubble
 			if bubble.id == 0:
 				_left_score += points_for_bubble
 			else:
 				_right_score += points_for_bubble
+	for bubble in bubbles:
+		bubble.score()
+		await get_tree().create_timer(0.25).timeout
+	_all_bubbles_scored.emit()
 	_update_score_labels()
 
 
@@ -153,7 +156,6 @@ func _on_end_of_round_state_input(event: InputEvent) -> void:
 
 
 func _on_done_state_entered() -> void:
-	_switch_to_angled_camera()
 	%EndOfGameView.visible = true
 	var blue_wins := _left_score > _right_score
 	%BlueModel.visible = blue_wins
@@ -178,3 +180,23 @@ func _on_done_state_exited() -> void:
 ## and trigger selecting blue's position, unintentionally.
 func _is_any_key_pressed(event : InputEvent) -> bool:
 	return event is InputEventKey and not event.pressed
+
+
+func _on_scoring_state_entered() -> void:
+	_switch_to_angled_camera()
+	# wait for camera to be in position
+	await _camera_in_position
+	# calculate scores
+	_score_round()
+	# wait for all score popups to display
+	await _all_bubbles_scored
+	# wait little bit more
+	await get_tree().create_timer(0.75).timeout
+	
+	# proceed
+	var is_game_over := _left_score != _right_score \
+		and (_left_score >= points_to_win or _right_score >= points_to_win)
+	if is_game_over:
+		$StateChart.send_event("game_over")
+	else:
+		$StateChart.send_event("round_over")

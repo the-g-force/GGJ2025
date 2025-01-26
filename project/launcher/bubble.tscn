@@ -129,7 +129,7 @@ libraries = {
 autoplay = "goblintime"
 
 [node name="ScorePopup" type="Label3D" parent="."]
-transform = Transform3D(-1, 0, -5.96046e-08, 0, 1, 0, 5.96046e-08, 0, -1, 0, 0.978383, 0)
+transform = Transform3D(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
 billboard = 1
 font = SubResource("FontVariation_d6rbe")
 font_size = 120
