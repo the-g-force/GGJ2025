@@ -13,8 +13,16 @@ var goblins := 0
 var popping := false
 var points := 0
 
+## When a bubble hits a bubble, that is two collisions, but we only want to hear one
+## sound. This is used to make sure we only request one bump sound per frame.
+var _processed_bump_sound := false
+
 @onready var _score_popup := $ScorePopup
 
+
+func _physics_process(_delta: float) -> void:
+	_processed_bump_sound = false
+	
 
 func _update_bubble_material() -> void:
 	var new_material := ShaderMaterial.new()
@@ -45,6 +53,8 @@ func absorb_goblin(path: String) -> void:
 
 
 func pop() -> void:
+	Sfx.play_pop_sound()
+	
 	sleeping = true
 	popping = true
 	$AnimationPlayer.stop()
@@ -75,3 +85,13 @@ func hide_score() -> void:
 	var tween := create_tween().set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(_score_popup, "position", Vector3.ZERO, 0.2)
 	tween.parallel().tween_property(_score_popup, "scale", Vector3.ZERO, 0.2)
+
+
+func _on_body_entered(body: Node) -> void:
+	# Detect bubble-bubble collisions
+	if body.is_in_group("bubble") and not _processed_bump_sound:
+		Sfx.play_bump_sound()
+		_processed_bump_sound = true
+	
+	elif body.is_in_group("peg"):
+		Sfx.play_pole_sound()

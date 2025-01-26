@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://nwpnu72k6t1v"
-path="res://.godot/imported/bubble_bump2.wav-f2098739b55d62a0c14c6b383c628a15.sample"
+uid="uid://djbq4r4e3o8c3"
+path="res://.godot/imported/bubble_pop5.wav-a3efff81d54a019d30b2284b04f41f09.sample"
 
 [deps]
 
-source_file="res://audio/bubble_bump2.wav"
-dest_files=["res://.godot/imported/bubble_bump2.wav-f2098739b55d62a0c14c6b383c628a15.sample"]
+source_file="res://common/bubble_pop5.wav"
+dest_files=["res://.godot/imported/bubble_pop5.wav-a3efff81d54a019d30b2284b04f41f09.sample"]
 
 [params]
 

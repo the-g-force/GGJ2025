@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://dabw7f5i5xcyt"
-path="res://.godot/imported/blowing.wav-2d3a465cbf16595fd28e4a4144b39b75.sample"
+uid="uid://c8gbcqhexkybe"
+path="res://.godot/imported/blow.wav-f995491c9583060cd5cd3a071b0e68da.sample"
 
 [deps]
 
-source_file="res://audio/blowing.wav"
-dest_files=["res://.godot/imported/blowing.wav-2d3a465cbf16595fd28e4a4144b39b75.sample"]
+source_file="res://common/blow.wav"
+dest_files=["res://.godot/imported/blow.wav-f995491c9583060cd5cd3a071b0e68da.sample"]
 
 [params]
 

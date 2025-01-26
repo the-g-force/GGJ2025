@@ -1,0 +1,18 @@
+[gd_scene load_steps=2 format=3 uid="uid://cy7ltc5ssvj5q"]
+
+[ext_resource type="Script" path="res://common/sfx.gd" id="1_r7jpa"]
+
+[node name="Sfx" type="Node"]
+script = ExtResource("1_r7jpa")
+
+[node name="BlowSoundPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Sfx"
+
+[node name="PopSoundPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Sfx"
+
+[node name="BumpSoundPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Sfx"
+
+[node name="PoleSoundPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Sfx"

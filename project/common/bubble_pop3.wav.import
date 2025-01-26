@@ -2,13 +2,13 @@
 
 importer="wav"
 type="AudioStreamWAV"
-uid="uid://83mdt5660duu"
-path="res://.godot/imported/goblin_slurp8.wav-1dfe3d70516fc617542df5f7d9593a55.sample"
+uid="uid://chw1ytmxk4s1p"
+path="res://.godot/imported/bubble_pop3.wav-ccbca681ace9e0be60d6753b01ade8ae.sample"
 
 [deps]
 
-source_file="res://audio/goblin_slurp8.wav"
-dest_files=["res://.godot/imported/goblin_slurp8.wav-1dfe3d70516fc617542df5f7d9593a55.sample"]
+source_file="res://common/bubble_pop3.wav"
+dest_files=["res://.godot/imported/bubble_pop3.wav-ccbca681ace9e0be60d6753b01ade8ae.sample"]
 
 [params]
 

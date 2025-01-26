@@ -84,6 +84,8 @@ func _on_shooting_state_entered() -> void:
 
 
 func _launch() -> void:
+	Sfx.play_blow_sound()
+	
 	var direction : Vector3 = Vector3.LEFT.rotated(Vector3.UP, _wand.global_rotation.y)
 	var power := base_power * remap(power_ratio, 0, 1, 0.5, 1.5)
 	

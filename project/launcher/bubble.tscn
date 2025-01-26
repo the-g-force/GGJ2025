@@ -94,6 +94,8 @@ axis_lock_angular_x = true
 axis_lock_angular_z = true
 physics_material_override = SubResource("PhysicsMaterial_57hc0")
 gravity_scale = 5.0
+contact_monitor = true
+max_contacts_reported = 4
 script = ExtResource("1_ax73q")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
@@ -131,3 +133,5 @@ font_size = 120
 
 [node name="Goblin" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.313, 0)
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

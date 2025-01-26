@@ -15,6 +15,10 @@ run/main_scene="res://world.tscn"
 config/features=PackedStringArray("4.3", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+Sfx="*res://common/sfx.tscn"
+
 [display]
 
 window/size/viewport_width=960
@@ -29,6 +33,7 @@ enabled=PackedStringArray("res://addons/anthonyec.camera_preview/plugin.cfg", "r
 
 bubble=""
 goblin=""
+peg=""
 
 [input]
 

@@ -13,7 +13,7 @@ height = 1.0
 height = 1.0
 radius = 0.1
 
-[node name="Peg" type="StaticBody3D"]
+[node name="Peg" type="StaticBody3D" groups=["peg"]]
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("CylinderMesh_wexo4")
