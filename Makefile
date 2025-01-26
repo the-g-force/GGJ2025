@@ -6,11 +6,11 @@ all: windows linux zip
 clean:
 	rm -rf build
 
-windows:
+linux:
 	mkdir -p build/linux
 	$(godot) -v --export-release --headless "Linux" ../build/linux/$(name).x86_64 project/project.godot
 
-linux:
+windows:
 	mkdir -p build/windows
 	$(godot) -v --export-release --headless "Windows Desktop" ../build/windows/$(name).exe project/project.godot
 
