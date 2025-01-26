@@ -75,6 +75,8 @@ func score() -> void:
 
 
 func _popup_score(text: String) -> void:
+	Sfx.play_score_sound()
+	
 	_score_popup.text = text
 	var tween := create_tween().set_trans(Tween.TRANS_QUAD)
 	tween.tween_property(_score_popup, "position", Vector3.UP, 0.1)

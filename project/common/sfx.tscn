@@ -16,3 +16,6 @@ bus = &"Sfx"
 
 [node name="PoleSoundPlayer" type="AudioStreamPlayer" parent="."]
 bus = &"Sfx"
+
+[node name="ScoreSoundPlayer" type="AudioStreamPlayer" parent="."]
+bus = &"Sfx"

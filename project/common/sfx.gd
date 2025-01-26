@@ -17,6 +17,9 @@ const _BUMP_SOUNDS : Array[AudioStream] = [
 const _POLE_SOUNDS : Array[AudioStream] = [
 	preload("res://common/pole_bump.wav"),
 ]
+const _SCORE_SOUNDS : Array[AudioStream] = [
+	preload("res://common/score.wav"),
+]
 
 func play_blow_sound() -> void:
 	_play($BlowSoundPlayer, _BLOW_SOUNDS)
@@ -32,6 +35,10 @@ func play_bump_sound() -> void:
 
 func play_pole_sound() -> void:
 	_play($PoleSoundPlayer, _POLE_SOUNDS)
+
+
+func play_score_sound() -> void:
+	_play($ScoreSoundPlayer, _SCORE_SOUNDS)
 
 
 func _play(player : AudioStreamPlayer, array : Array[AudioStream]) -> void:
